@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
+=begin
 30.times do |i|
 
   Feed.create([{user_id: 0, feed_type: Random.new(5), goto_id:i},
@@ -26,3 +26,4 @@
                  {user_id: 1, topic_id: i, message: Faker::Lorem.paragraph}])
   end
 end
+=end
