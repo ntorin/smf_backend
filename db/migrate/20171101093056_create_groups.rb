@@ -8,8 +8,8 @@ class CreateGroups < ActiveRecord::Migration[5.0]
       t.integer :member_count
       t.integer :topic_count
       t.integer :post_count
-      t.decimal :lat
-      t.decimal :lng
+      t.decimal :lat, {:precision=>10, :scale=>6}
+      t.decimal :lng, {:precision=>10, :scale=>6}
 
       t.timestamps
     end
