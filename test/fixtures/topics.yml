@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  group_id: 1
+  creator_id: 1
+  title: MyString
+  topic_type: 1
+  last_post_date: 2017-11-01 02:30:51
+
+two:
+  group_id: 1
+  creator_id: 1
+  title: MyString
+  topic_type: 1
+  last_post_date: 2017-11-01 02:30:51

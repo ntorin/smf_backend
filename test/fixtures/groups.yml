@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  creator_id: 1
+  handle: MyString
+  name: MyString
+  description: MyText
+  member_count: 1
+  topic_count: 1
+  post_count: 1
+  lat: 9.99
+  lng: 9.99
+
+two:
+  creator_id: 1
+  handle: MyString
+  name: MyString
+  description: MyText
+  member_count: 1
+  topic_count: 1
+  post_count: 1
+  lat: 9.99
+  lng: 9.99
