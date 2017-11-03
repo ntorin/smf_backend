@@ -11,6 +11,7 @@ rails g scaffold Group creator_id:integer handle:string name:string description:
 rails g scaffold GroupTag group_id:integer name:string
 rails g scaffold Topic group_id:integer creator_id:integer title:string topic_type:integer last_post_date:datetime
 rails g scaffold TopicTag topic_id:integer name:string
-rails g scaffold Post topic_id:integer creator_id:integer content:text is_anonymous:boolean edit_date:datetime
+rails g scaffold Post topic_id:integer creator_id:integer content:text likes:integer dislikes:integer is_anonymous:boolean edit_date:datetime
+rails g scaffold PostLike post_id:integer user_id:integer is_like:boolean
 rails g scaffold Notification user_id:integer notification_type:integer description:text is_seen:boolean goto_id:integer
 rails g scaffold Report reporter_id:integer reported_id:integer reason:string comment:text

@@ -15,4 +15,14 @@ ActiveRecord::Schema.define(version: 0) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "posts", force: :cascade do |t|
+    t.integer  "topic_id"
+    t.integer  "creator_id"
+    t.text     "content"
+    t.boolean  "is_anonymous"
+    t.datetime "edit_date"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
 end

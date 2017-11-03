@@ -4,12 +4,16 @@ one:
   topic_id: 1
   creator_id: 1
   content: MyText
+  likes: 1
+  dislikes: 1
   is_anonymous: false
-  edit_date: 2017-11-01 02:30:52
+  edit_date: 2017-11-01 15:30:38
 
 two:
   topic_id: 1
   creator_id: 1
   content: MyText
+  likes: 1
+  dislikes: 1
   is_anonymous: false
-  edit_date: 2017-11-01 02:30:52
+  edit_date: 2017-11-01 15:30:38

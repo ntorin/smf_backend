@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
+  resources :post_likes
+  resources :posts
   resources :reports
   resources :notifications
-  resources :posts
   resources :topic_tags
   resources :topics
   resources :group_tags
