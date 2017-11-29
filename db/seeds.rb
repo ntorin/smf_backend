@@ -111,14 +111,14 @@ Group.create({creator_id: 0, handle: 'global', name: 'Global BBS', description: 
       [
           {
               reporter_id: 0,
-              reported: 1,
+              reported_id: 1,
               reason: Faker::Lorem.word,
               comment: Faker::Lorem.sentence
           },
 
           {
               reporter_id: 1,
-              reported: 0,
+              reported_id: 0,
               reason: Faker::Lorem.word,
               comment: Faker::Lorem.sentence
           }
