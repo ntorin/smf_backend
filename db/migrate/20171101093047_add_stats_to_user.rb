@@ -1,6 +1,6 @@
 class AddStatsToUser < ActiveRecord::Migration[5.0]
   def change
-    add_column :users, :handle, :string
+    add_column :users, :accountid, :string
     add_column :users, :name, :string
     add_column :users, :birthday, :date
     add_column :users, :follower_count, :integer
@@ -14,5 +14,6 @@ class AddStatsToUser < ActiveRecord::Migration[5.0]
     add_column :users, :post_count, :integer
     add_column :users, :group_count, :integer
     add_column :users, :accepted_tos, :boolean
+    add_column :users, :verified, :boolean
   end
 end
