@@ -35,6 +35,18 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[5.0]
 
       ## User Info
       t.string :email
+      t.string :accountid
+      t.string :name
+      t.text :blurb
+      t.integer :post_count
+      t.integer :topic_count
+      t.integer :following_count
+      t.integer :follower_count
+      t.integer :friend_count
+      t.integer :credits
+      t.float :multiplier
+      t.boolean :accepted_tos
+      t.boolean :verified
 
       ## Tokens
       t.json :tokens

@@ -1,10 +1,7 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+[Feed, Group, Topic, PrivateMessage, Notification, Report, Post, TopicTag, GroupTag].each do |table|
+  ActiveRecord::Base.connection.execute("TRUNCATE #{table.table_name}")
+  ActiveRecord::Base.connection.reset_pk_sequence!(table.table_name)
+end
 
 # creating the Global BBS
 Group.create({creator_id: 0, handle: 'global', name: 'Global BBS', description: 'Talk about anything.', member_count: 0, topic_count: 0, post_count: 0, lat: 0, lng: 0})
@@ -135,6 +132,9 @@ Group.create({creator_id: 0, handle: 'global', name: 'Global BBS', description: 
                 topic_id: i,
                 creator_id: 0,
                 content: Faker::Lorem.paragraph,
+                likes: Random.rand(0..500),
+                dislikes: Random.rand(0..500),
+                is_op: true,
                 is_anonymous: false,
             },
 
@@ -142,6 +142,9 @@ Group.create({creator_id: 0, handle: 'global', name: 'Global BBS', description: 
                 topic_id: i,
                 creator_id: 1,
                 content: Faker::Lorem.paragraph,
+                likes: Random.rand(0..500),
+                dislikes: Random.rand(0..500),
+                is_op: false,
                 is_anonymous: true,
                 edit_date: DateTime.now
             }

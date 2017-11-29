@@ -6,6 +6,7 @@ class CreatePosts < ActiveRecord::Migration[5.0]
       t.text :content
       t.integer :likes
       t.integer :dislikes
+      t.boolean :is_op
       t.boolean :is_anonymous
       t.datetime :edit_date
 
@@ -13,3 +14,4 @@ class CreatePosts < ActiveRecord::Migration[5.0]
     end
   end
 end
+c
