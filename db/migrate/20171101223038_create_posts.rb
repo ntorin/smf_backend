@@ -9,9 +9,7 @@ class CreatePosts < ActiveRecord::Migration[5.0]
       t.boolean :is_op
       t.boolean :is_anonymous
       t.datetime :edit_date
-
       t.timestamps
     end
   end
 end
-c
