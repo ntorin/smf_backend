@@ -37,6 +37,11 @@ class NotificationsController < ApplicationController
   def destroy
     @notification.destroy
   end
+  
+  # POST /notifications/fetch
+  def fetch
+    
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

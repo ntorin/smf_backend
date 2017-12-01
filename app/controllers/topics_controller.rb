@@ -38,6 +38,27 @@ class TopicsController < ApplicationController
     @topic.destroy
   end
 
+  # POST /topics/fetch
+  # group_id:
+  # sort_by:
+  # offset:
+  # limit:
+  # query:
+  def fetch
+    sort = 'last_post_date DESC'
+
+    case params[:sort_by]
+      when 'recent'
+        sort = 'last_post_date DESC'
+      else
+
+    end
+
+    topics = Topic.where("group_id = ? AND LOWER(title) LIKE ?", params[:group_id], '%' + params[:query].to_s.downcase + '%').order(sort).offset(params[:offset]).limit(params[:limit])
+
+    render json: topics
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_topic

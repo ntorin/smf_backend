@@ -38,6 +38,18 @@ class PostsController < ApplicationController
     @post.destroy
   end
 
+  # POST /posts/fetch
+  # topic_id:
+  # offset:
+  # limit:
+  def fetch
+    sort = 'created_at DESC'
+
+    posts = Post.where("topic_id = ?", params[:topic_id]).order(sort).offset(params[:offset]).limit(params[:limit])
+
+    render json: posts
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post

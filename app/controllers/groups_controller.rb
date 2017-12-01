@@ -38,6 +38,28 @@ class GroupsController < ApplicationController
     @group.destroy
   end
 
+  # POST /groups/fetch
+  # sort_by:
+  # offset:
+  # limit:
+  # query:
+  def fetch
+    sort = 'created_at DESC'
+
+    case params[:sort_by]
+      when 'recent'
+        sort = 'created_at DESC'
+      else
+
+    end
+
+    query = '%' + params[:query].downcase + '%'
+
+    groups = Group.where("LOWER(name) LIKE ? OR LOWER(handle) LIKE ?", query, query).order(sort).offset(params[:offset]).limit(params[:limit])
+
+    render json: groups
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_group
