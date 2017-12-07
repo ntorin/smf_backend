@@ -30,7 +30,7 @@ gem 'figaro'
 
 # Authorization
 gem 'devise'
-gem 'cancancan', '~> 1.10'
+gem 'cancancan', '~> 2.0'
 gem 'devise_token_auth'
 gem 'omniauth'
 

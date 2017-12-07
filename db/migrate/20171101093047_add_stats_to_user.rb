@@ -1,6 +1,7 @@
 class AddStatsToUser < ActiveRecord::Migration[5.0]
   def change
     add_column :users, :identifier, :string
+    add_index :users, :identifier, unique: true
     add_column :users, :name, :string
     add_column :users, :blurb, :string
     add_column :users, :birthday, :date

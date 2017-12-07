@@ -68,18 +68,12 @@ ActiveRecord::Schema.define(version: 20171101223045) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "group_tags", force: :cascade do |t|
-    t.integer  "group_id"
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "groups", force: :cascade do |t|
     t.integer  "creator_id"
-    t.string   "handle"
+    t.string   "identifier"
     t.string   "name"
     t.text     "description"
+    t.string   "tags"
     t.integer  "member_count"
     t.integer  "topic_count"
     t.integer  "post_count"
@@ -137,18 +131,12 @@ ActiveRecord::Schema.define(version: 20171101223045) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "topic_tags", force: :cascade do |t|
-    t.integer  "topic_id"
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "topics", force: :cascade do |t|
     t.integer  "group_id"
     t.integer  "creator_id"
     t.string   "title"
     t.integer  "topic_type"
+    t.string   "tags"
     t.datetime "last_post_date"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
@@ -174,8 +162,9 @@ ActiveRecord::Schema.define(version: 20171101223045) do
     t.json     "tokens"
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
-    t.string   "accountid"
+    t.string   "identifier"
     t.string   "name"
+    t.string   "blurb"
     t.date     "birthday"
     t.integer  "follower_count"
     t.integer  "following_count"
@@ -191,6 +180,7 @@ ActiveRecord::Schema.define(version: 20171101223045) do
     t.boolean  "verified"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["identifier"], name: "index_users_on_identifier", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
   end

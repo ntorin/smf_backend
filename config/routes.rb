@@ -4,9 +4,7 @@ Rails.application.routes.draw do
   resources :posts
   resources :reports
   resources :notifications
-  resources :topic_tags
   resources :topics
-  resources :group_tags
   resources :groups
   resources :feeds
   resources :conversation_users
@@ -17,6 +15,11 @@ Rails.application.routes.draw do
   resources :friends
   resources :credit_histories
   resources :users
+
+  mount_devise_token_auth_for 'User', at: 'auth'
+
+  post 'users/fetch', to: 'users#fetch'
+  post 'users/validate_identifier', to: 'users#validate_identifier'
 
   post 'topics/fetch', to: 'topics#fetch'
 
