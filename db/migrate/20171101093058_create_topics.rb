@@ -5,6 +5,7 @@ class CreateTopics < ActiveRecord::Migration[5.0]
       t.integer :creator_id
       t.string :title
       t.integer :topic_type
+      t.string :tags
       t.datetime :last_post_date
 
       t.timestamps

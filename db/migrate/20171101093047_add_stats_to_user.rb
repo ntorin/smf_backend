@@ -1,7 +1,8 @@
 class AddStatsToUser < ActiveRecord::Migration[5.0]
   def change
-    add_column :users, :accountid, :string
+    add_column :users, :identifier, :string
     add_column :users, :name, :string
+    add_column :users, :blurb, :string
     add_column :users, :birthday, :date
     add_column :users, :follower_count, :integer
     add_column :users, :following_count, :integer

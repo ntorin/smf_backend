@@ -137,7 +137,6 @@ Group.create({creator_id: 0, handle: 'global', name: 'Global BBS', description: 
                 is_op: true,
                 is_anonymous: false,
             },
-
             {
                 topic_id: i,
                 creator_id: 1,
@@ -157,7 +156,6 @@ Group.create({creator_id: 0, handle: 'global', name: 'Global BBS', description: 
                 is_op: true,
                 is_anonymous: false,
             },
-
             {
                 topic_id: i + 30,
                 creator_id: 1,
