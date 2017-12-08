@@ -15,12 +15,14 @@ class PostLikesController < ApplicationController
 
   # POST /post_likes
   def create
-    @post_like = PostLike.new(post_like_params)
+    if !PostLike.exists?(post_id: params[:post_like][:post_id], user_id: params[:post_like][:user_id])
+      @post_like = PostLike.new(post_like_params)
 
-    if @post_like.save
-      render json: @post_like, status: :created, location: @post_like
-    else
-      render json: @post_like.errors, status: :unprocessable_entity
+      if @post_like.save
+        render json: @post_like, status: :created, location: @post_like
+      else
+        render json: @post_like.errors, status: :unprocessable_entity
+      end
     end
   end
 
