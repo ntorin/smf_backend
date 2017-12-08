@@ -17,7 +17,10 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
 
+
     if @post.save
+
+
       render json: @post, status: :created, location: @post
     else
       render json: @post.errors, status: :unprocessable_entity
@@ -48,6 +51,10 @@ class PostsController < ApplicationController
     posts = Post.where("topic_id = ?", params[:topic_id]).order(sort).offset(params[:offset]).limit(params[:limit])
 
     render json: posts
+  end
+
+  def reply_topic
+
   end
 
   private

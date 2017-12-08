@@ -51,10 +51,10 @@ class TopicsController < ApplicationController
       when 'recent'
         sort = 'last_post_date DESC'
       else
-
     end
 
-    topics = Topic.where("group_id = ? AND LOWER(title) LIKE ?", params[:group_id], '%' + params[:query].to_s.downcase + '%').order(sort).offset(params[:offset]).limit(params[:limit])
+    topics = Topic.where("group_id = ? AND LOWER(title) LIKE ?", params[:group_id], '%' + params[:query].to_s.downcase + '%')
+                 .order(sort).offset(params[:offset]).limit(params[:limit])
 
     render json: topics
   end
@@ -67,6 +67,6 @@ class TopicsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def topic_params
-      params.require(:topic).permit(:group_id, :creator_id, :title, :topic_type, :tags, :last_post_date)
+      params.require(:topic).permit(:group_id, :creator_id, :title, :topic_type, :tags, :post_count, :last_post_date)
     end
 end

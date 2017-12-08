@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :group_users
+  resources :friends
+  resources :conversation_messages
   resources :users
   resources :post_likes
   resources :posts
@@ -9,10 +12,8 @@ Rails.application.routes.draw do
   resources :feeds
   resources :conversation_users
   resources :conversations
-  resources :private_messages
   resources :blocks
   resources :follows
-  resources :friends
   resources :credit_histories
   resources :users
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171101223045) do
+ActiveRecord::Schema.define(version: 20171208151551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,14 @@ ActiveRecord::Schema.define(version: 20171101223045) do
     t.integer  "blocked_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "conversation_messages", force: :cascade do |t|
+    t.integer  "conversation_id"
+    t.integer  "sender_id"
+    t.text     "message"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "conversation_users", force: :cascade do |t|
@@ -64,6 +72,14 @@ ActiveRecord::Schema.define(version: 20171101223045) do
   create_table "friends", force: :cascade do |t|
     t.integer  "friend_one"
     t.integer  "friend_two"
+    t.boolean  "is_accepted"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "group_users", force: :cascade do |t|
+    t.integer  "group_id"
+    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -114,14 +130,6 @@ ActiveRecord::Schema.define(version: 20171101223045) do
     t.datetime "updated_at",   null: false
   end
 
-  create_table "private_messages", force: :cascade do |t|
-    t.integer  "conversation_id"
-    t.integer  "sender_id"
-    t.text     "message"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
   create_table "reports", force: :cascade do |t|
     t.integer  "reporter_id"
     t.integer  "reported_id"
@@ -137,6 +145,7 @@ ActiveRecord::Schema.define(version: 20171101223045) do
     t.string   "title"
     t.integer  "topic_type"
     t.string   "tags"
+    t.integer  "post_count"
     t.datetime "last_post_date"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false

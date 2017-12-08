@@ -53,7 +53,7 @@ class UsersController < ApplicationController
 
   # POST /users/validate_identifier
   def validate_identifier
-     if User.where("LOWER(identifier) = ?", params[:identifier].downcase).count > 0
+     if User.where("LOWER(identifier) = ?", params[:identifier].downcase).exists?
        render json: { message: 'Identifier is already taken.', valid: false }
      else
        render json: { message: 'Identifier is available.', valid: true }

@@ -3,7 +3,9 @@
 one:
   friend_one: 1
   friend_two: 1
+  is_accepted: false
 
 two:
   friend_one: 1
   friend_two: 1
+  is_accepted: false

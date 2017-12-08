@@ -15,12 +15,14 @@ class FollowsController < ApplicationController
 
   # POST /follows
   def create
-    @follow = Follow.new(follow_params)
+    if !Follow.exists?(following_id: params[:follow][:following_id], follower_id: params[:follow][:follower_id])
+      @follow = Follow.new(follow_params)
 
-    if @follow.save
-      render json: @follow, status: :created, location: @follow
-    else
-      render json: @follow.errors, status: :unprocessable_entity
+      if @follow.save
+        render json: @follow, status: :created, location: @follow
+      else
+        render json: @follow.errors, status: :unprocessable_entity
+      end
     end
   end
 

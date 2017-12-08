@@ -15,12 +15,20 @@ class FriendsController < ApplicationController
 
   # POST /friends
   def create
+    request = Friend.where(friend_one: params[:friend][:friend_two], friend_two: params[:friend][:friend_one]).first
+
+    if !request.blank? # check if other user sent friend request previously; if they did, accept the request
+      request.update(is_accepted: true)
+
+      render json: request
+    elsif !Friend.exists?(friend_one: params[:friend][:friend_one], friend_two: params[:friend][:friend_two]) # if the request isn't a duplicate, create a new one
     @friend = Friend.new(friend_params)
 
-    if @friend.save
-      render json: @friend, status: :created, location: @friend
-    else
-      render json: @friend.errors, status: :unprocessable_entity
+      if @friend.save
+        render json: @friend, status: :created, location: @friend
+      else
+        render json: @friend.errors, status: :unprocessable_entity
+      end
     end
   end
 
@@ -38,6 +46,16 @@ class FriendsController < ApplicationController
     @friend.destroy
   end
 
+  def accept_request
+    request = Friend.find(params[:request_id])
+
+    if !request.is_accepted
+      request.update(is_accepted: true)
+
+      render json: request
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_friend
@@ -46,6 +64,6 @@ class FriendsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def friend_params
-      params.require(:friend).permit(:friend_one, :friend_two)
+      params.require(:friend).permit(:friend_one, :friend_two, :is_accepted)
     end
 end
