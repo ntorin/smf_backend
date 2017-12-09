@@ -41,12 +41,26 @@ class UsersController < ApplicationController
   # POST /users/fetch
   # identifier:
   # name:
+  # sort_by:
+  # offset:
+  # limit:
   def fetch
+    sort = 'created_at DESC'
+
+    case params[:sort_by]
+      when 'recent'
+        sort = 'created_at DESC'
+      else
+
+    end
 
     identifier = '%' + params[:identifier] + '%'
     name = '%' + params[:name] + '%'
 
     users = User.where("LOWER(identifier) LIKE ? OR LOWER(name) LIKE ?", identifier, name)
+                .order(sort)
+                .offset(params[:offset])
+                .limit(params[:limit])
 
     render json: users
   end

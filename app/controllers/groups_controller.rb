@@ -57,7 +57,10 @@ class GroupsController < ApplicationController
 
     query = '%' + params[:query].downcase + '%'
 
-    groups = Group.where("LOWER(name) LIKE ? OR LOWER(identifier) LIKE ?", query, query).order(sort).offset(params[:offset]).limit(params[:limit])
+    groups = Group.where("LOWER(name) LIKE ? OR LOWER(identifier) LIKE ?", query, query)
+                 .order(sort)
+                 .offset(params[:offset])
+                 .limit(params[:limit])
 
     render json: groups
   end
