@@ -46,6 +46,32 @@ class FriendsController < ApplicationController
     @friend.destroy
   end
 
+  # POST /friends/fetch
+  # user_id:
+  # fetch_type:
+  # offset:
+  # limit:
+  def fetch
+    friends = [{}]
+
+    case params[:fetch_type]
+      when 'all'
+        friends = Friend.where("(friend_one = ? OR friend_two = ?) AND is_accepted = true", params[:user_id], params[:user_id])
+                      .offset(params[:offset])
+                      .limit(params[:limit])
+      when 'incoming'
+        friends = Friend.where("friend_two = ? AND is_accepted = false", params[:user_id])
+                      .offset(params[:offset])
+                      .limit(params[:limit])
+      when 'outgoing'
+        friends = Friend.where("friend_one = ? AND is_accepted = false", params[:user_id])
+                      .offset(params[:offset])
+                      .limit(params[:limit])
+    end
+
+    render json: friends
+  end
+
   # POST
   # request_id:
   def accept_request

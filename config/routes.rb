@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   post 'users/validate_identifier', to: 'users#validate_identifier'
 
   post 'friends/accept_request', to: 'friends#accept_request'
+  post 'friends/fetch', to: 'friends#fetch'
 
   post 'groups/fetch', to: 'groups#fetch'
   post 'groups/validate_identifier', to: 'groups#validate_identifier'
