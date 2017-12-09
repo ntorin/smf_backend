@@ -50,6 +50,8 @@ class UsersController < ApplicationController
     case params[:sort_by]
       when 'recent'
         sort = 'created_at DESC'
+      when 'popular'
+        sort = 'post_count DESC'
       else
 
     end
