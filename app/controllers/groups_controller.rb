@@ -15,12 +15,14 @@ class GroupsController < ApplicationController
 
   # POST /groups
   def create
-    @group = Group.new(group_params)
+    if !Group.where("LOWER(identifier) = ?", params[:group][:identifier].downcase).exists?
+      @group = Group.new(group_params)
 
-    if @group.save
-      render json: @group, status: :created, location: @group
-    else
-      render json: @group.errors, status: :unprocessable_entity
+      if @group.save
+        render json: @group, status: :created, location: @group
+      else
+        render json: @group.errors, status: :unprocessable_entity
+      end
     end
   end
 
@@ -60,6 +62,15 @@ class GroupsController < ApplicationController
     render json: groups
   end
 
+  # POST /groups/validate_identifier
+  def validate_identifier
+    if Group.where("LOWER(identifier) = ?", params[:identifier].downcase).exists?
+      render json: { message: 'Identifier is already taken.', valid: false }
+    else
+      render json: { message: 'Identifier is available.', valid: true }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_group
@@ -68,6 +79,6 @@ class GroupsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def group_params
-      params.require(:group).permit(:creator_id, :identifier, :name, :description, :tags, :member_count, :topic_count, :post_count, :lat, :lng)
+      params.require(:group).permit(:creator_id, :identifier, :name, :description, :group_type, :tags, :member_count, :topic_count, :post_count, :lat, :lng)
     end
 end

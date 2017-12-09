@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   post 'topics/fetch', to: 'topics#fetch'
 
   post 'groups/fetch', to: 'groups#fetch'
+  post 'groups/validate_identifier', to: 'groups#validate_identifier'
 
   post 'posts/fetch', to: 'posts#fetch'
 

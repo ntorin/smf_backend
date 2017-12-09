@@ -3,8 +3,10 @@ class CreateGroups < ActiveRecord::Migration[5.0]
     create_table :groups do |t|
       t.integer :creator_id
       t.string :identifier
+      add_index :groups, :identifier, unique: true
       t.string :name
       t.text :description
+      t.string :group_type
       t.string :tags
       t.integer :member_count
       t.integer :topic_count
