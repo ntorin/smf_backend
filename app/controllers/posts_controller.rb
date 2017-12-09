@@ -46,7 +46,7 @@ class PostsController < ApplicationController
   # offset:
   # limit:
   def fetch
-    sort = 'created_at DESC'
+    sort = 'created_at ASC'
 
     posts = Post.where("topic_id = ?", params[:topic_id]).order(sort).offset(params[:offset]).limit(params[:limit])
 
@@ -65,6 +65,6 @@ class PostsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def post_params
-      params.require(:post).permit(:topic_id, :creator_id, :content, :likes, :dislikes, :is_anonymous, :edit_date)
+      params.require(:post).permit(:group_id, :topic_id, :creator_id, :content, :likes, :dislikes, :is_op, :is_anonymous, :edit_date)
     end
 end
