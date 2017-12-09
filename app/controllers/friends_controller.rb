@@ -46,6 +46,8 @@ class FriendsController < ApplicationController
     @friend.destroy
   end
 
+  # POST
+  # request_id:
   def accept_request
     request = Friend.find(params[:request_id])
 

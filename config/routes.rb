@@ -22,12 +22,15 @@ Rails.application.routes.draw do
   post 'users/fetch', to: 'users#fetch'
   post 'users/validate_identifier', to: 'users#validate_identifier'
 
-  post 'topics/fetch', to: 'topics#fetch'
+  post 'friends/accept_request', to: 'friends#accept_request'
 
   post 'groups/fetch', to: 'groups#fetch'
   post 'groups/validate_identifier', to: 'groups#validate_identifier'
 
   post 'posts/fetch', to: 'posts#fetch'
+
+  post 'topics/fetch', to: 'topics#fetch'
+
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
