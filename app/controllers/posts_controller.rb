@@ -50,7 +50,15 @@ class PostsController < ApplicationController
 
     posts = Post.where("topic_id = ?", params[:topic_id]).order(sort).offset(params[:offset]).limit(params[:limit])
 
-    render json: posts
+    post_creators = []
+
+    posts.each do |p|
+      post_creators.push(p.creator_id)
+    end
+
+    users = User.where(id: post_creators)
+
+    render json: { posts: posts, users: users}
   end
 
   def reply_topic

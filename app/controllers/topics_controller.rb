@@ -56,7 +56,15 @@ class TopicsController < ApplicationController
     topics = Topic.where("group_id = ? AND LOWER(title) LIKE ?", params[:group_id], '%' + params[:query].to_s.downcase + '%')
                  .order(sort).offset(params[:offset]).limit(params[:limit])
 
-    render json: topics
+    topic_creators = []
+
+    topics.each do |t|
+      topic_creators.push(t.creator_id)
+    end
+
+    users = User.where(id: topic_creators)
+
+    render json: {topics: topics, users: users}
   end
 
   private
@@ -67,6 +75,7 @@ class TopicsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def topic_params
-      params.require(:topic).permit(:group_id, :creator_id, :title, :topic_type, :tags, :post_count, :last_post_date)
+      params.require(:topic).permit(:group_id, :creator_id, :title, :topic_type, :is_anonymous, :is_pinned, :is_locked,
+                                    :tags, :post_count, :last_post_date)
     end
 end
