@@ -56,20 +56,48 @@ class FriendsController < ApplicationController
 
     case params[:fetch_type]
       when 'all'
-        friends = Friend.where("(friend_one = ? OR friend_two = ?) AND is_accepted = true", params[:user_id], params[:user_id])
-                      .offset(params[:offset])
-                      .limit(params[:limit])
+        friends = paginate Friend.where("(friend_one = ? OR friend_two = ?) AND is_accepted = true", params[:user_id], params[:user_id])
       when 'incoming'
-        friends = Friend.where("friend_two = ? AND is_accepted = false", params[:user_id])
-                      .offset(params[:offset])
-                      .limit(params[:limit])
+        friends = paginate Friend.where("friend_two = ? AND is_accepted = false", params[:user_id])
       when 'outgoing'
-        friends = Friend.where("friend_one = ? AND is_accepted = false", params[:user_id])
-                      .offset(params[:offset])
-                      .limit(params[:limit])
+        friends = paginate Friend.where("friend_one = ? AND is_accepted = false", params[:user_id])
     end
 
-    render json: friends
+    #friend_users = []
+
+    #friends.each do |f|
+    #  if f.friend_one == params[:user_id]
+    #    friend_users.push(f.friend_two)
+    #  else
+    #    friend_users.push(f.friend_one)
+    #  end
+    #end
+
+    #users = User.where(id: friend_users)
+
+    render json: friends.to_json(:include => :friend)
+  end
+
+  # POST /follows/check_request
+  # user_id:
+  # friend_id:
+  def check_request
+    request = Friend.where("(friend_one = ? AND friend_two = ?) OR (friend_one = ? AND friend_two = ?)",
+                           params[:user_id], params[:friend_id],
+                           params[:friend_id], params[:user_id]).first
+    if request.exists
+      if request.is_accepted
+        render json: { status: 'friends'}
+      else
+        if request.friend_one == params[:user_id]
+          render json: { status: 'awaiting response'}
+        else
+          render json: { status: 'accept request'}
+        end
+      end
+    else
+      render json: { status: 'none'}
+    end
   end
 
   # POST

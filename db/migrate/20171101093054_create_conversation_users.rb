@@ -3,7 +3,8 @@ class CreateConversationUsers < ActiveRecord::Migration[5.0]
     create_table :conversation_users do |t|
       t.integer :conversation_id
       t.integer :user_id
-      t.boolean :is_admin
+      t.string :role
+      t.integer :unreads
 
       t.timestamps
     end

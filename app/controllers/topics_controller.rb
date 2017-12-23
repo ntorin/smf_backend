@@ -4,8 +4,7 @@ class TopicsController < ApplicationController
   # GET /topics
   def index
     @topics = Topic.all
-
-    render json: @topics
+    paginate json: @topics
   end
 
   # GET /topics/1
@@ -41,8 +40,8 @@ class TopicsController < ApplicationController
   # POST /topics/fetch
   # group_id:
   # sort_by:
-  # offset:
-  # limit:
+  # page:
+  # per_page:
   # query:
   def fetch
     sort = 'last_post_date DESC'
@@ -53,18 +52,11 @@ class TopicsController < ApplicationController
       else
     end
 
-    topics = Topic.where("group_id = ? AND LOWER(title) LIKE ?", params[:group_id], '%' + params[:query].to_s.downcase + '%')
-                 .order(sort).offset(params[:offset]).limit(params[:limit])
+    topics = paginate Topic.where("group_id = ? AND LOWER(title) LIKE ?", params[:group_id], '%' + params[:query].to_s.downcase + '%')
+                 .joins(:user)
+                 .order(sort)
 
-    topic_creators = []
-
-    topics.each do |t|
-      topic_creators.push(t.creator_id)
-    end
-
-    users = User.where(id: topic_creators)
-
-    render json: {topics: topics, users: users}
+    render json: topics.to_json(:include => :user)
   end
 
   private
@@ -75,7 +67,7 @@ class TopicsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def topic_params
-      params.require(:topic).permit(:group_id, :creator_id, :title, :topic_type, :is_anonymous, :is_pinned, :is_locked,
+      params.require(:topic).permit(:group_id, :user_id, :title, :topic_type, :is_anonymous, :is_pinned, :is_locked,
                                     :tags, :post_count, :last_post_date)
     end
 end

@@ -5,7 +5,7 @@ class CreateNotifications < ActiveRecord::Migration[5.0]
       t.string :notification_type
       t.text :description
       t.boolean :is_seen
-      t.string :goto_id
+      t.string :deep_link
 
       t.timestamps
     end

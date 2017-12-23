@@ -38,6 +38,36 @@ class ConversationsController < ApplicationController
     @conversation.destroy
   end
 
+  # POST /conversations/fetch
+  # user_id:
+  # sort_by:
+  # page:
+  # per_page:
+  # query:
+  def fetch
+    sort = 'updated_at DESC'
+
+    case params[:sort_by]
+      when 'recent'
+        sort = 'updated_at DESC'
+    end
+
+    query = '%' + params[:query].downcase + '%'
+    conversation_users = ConversationUser.where(user_id: params[:user_id])
+
+    conversation_ids = []
+
+    conversation_users.each do |cu|
+      conversation_ids.push(cu.conversation_id)
+    end
+
+    conversations = Conversation.joins(:conversation_users)
+                        .where(:conversation_users => {user_id: params[:user]})
+                        .order(sort)
+
+    paginate json: conversations
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_conversation

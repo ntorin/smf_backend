@@ -43,26 +43,22 @@ class PostsController < ApplicationController
 
   # POST /posts/fetch
   # topic_id:
-  # offset:
-  # limit:
+  # page:
+  # per_page:
   def fetch
     sort = 'created_at ASC'
 
-    posts = Post.where("topic_id = ?", params[:topic_id]).order(sort).offset(params[:offset]).limit(params[:limit])
+    posts = paginate Post.where("topic_id = ?", params[:topic_id]).order(sort)
 
-    post_creators = []
+    #post_creators = []
 
-    posts.each do |p|
-      post_creators.push(p.creator_id)
-    end
+    #posts.each do |p|
+    #  post_creators.push(p.user_id)
+    #end
 
-    users = User.where(id: post_creators)
+    #users = User.where(id: post_creators)
 
-    render json: { posts: posts, users: users}
-  end
-
-  def reply_topic
-
+    render json: posts.to_json(:include => :user)
   end
 
   private
@@ -73,6 +69,6 @@ class PostsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def post_params
-      params.require(:post).permit(:group_id, :topic_id, :creator_id, :content, :likes, :dislikes, :is_op, :is_anonymous, :edit_date)
+      params.require(:post).permit(:group_id, :topic_id, :user_id, :content, :likes, :dislikes, :is_op, :is_anonymous, :edit_date)
     end
 end

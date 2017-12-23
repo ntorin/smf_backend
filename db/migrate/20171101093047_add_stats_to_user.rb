@@ -3,6 +3,7 @@ class AddStatsToUser < ActiveRecord::Migration[5.0]
     add_column :users, :identifier, :string
     add_index :users, :identifier, unique: true
     add_column :users, :name, :string
+    add_column :users, :role, :string
     add_column :users, :blurb, :string
     add_column :users, :birthday, :date
     add_column :users, :follower_count, :integer
@@ -17,5 +18,6 @@ class AddStatsToUser < ActiveRecord::Migration[5.0]
     add_column :users, :group_count, :integer
     add_column :users, :accepted_tos, :boolean
     add_column :users, :verified, :boolean
+    add_column :users, :is_banned, :boolean
   end
 end

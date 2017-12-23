@@ -3,7 +3,7 @@ class CreatePosts < ActiveRecord::Migration[5.0]
     create_table :posts do |t|
       t.integer :group_id
       t.integer :topic_id
-      t.integer :creator_id
+      t.integer :user_id
       t.text :content
       t.integer :likes
       t.integer :dislikes

@@ -7,11 +7,11 @@ rails g scaffold PrivateMessage conversation_id:integer sender_id:integer messag
 rails g scaffold Conversation name:string description:text is_group:boolean
 rails g scaffold ConversationUser conversation_id:integer user_id:integer is_admin:boolean
 rails g scaffold Feed user_id:integer feed_type:integer goto_id:integer
-rails g scaffold Group creator_id:integer handle:string name:string description:text member_count:integer topic_count:integer post_count:integer lat:decimal lng:decimal
+rails g scaffold Group user_id:integer handle:string name:string description:text member_count:integer topic_count:integer post_count:integer lat:decimal lng:decimal
 rails g scaffold GroupTag group_id:integer name:string
-rails g scaffold Topic group_id:integer creator_id:integer title:string topic_type:integer last_post_date:datetime
+rails g scaffold Topic group_id:integer user_id:integer title:string topic_type:integer last_post_date:datetime
 rails g scaffold TopicTag topic_id:integer name:string
-rails g scaffold Post topic_id:integer creator_id:integer content:text likes:integer dislikes:integer is_anonymous:boolean edit_date:datetime
+rails g scaffold Post topic_id:integer user_id:integer content:text likes:integer dislikes:integer is_anonymous:boolean edit_date:datetime
 rails g scaffold PostLike post_id:integer user_id:integer is_like:boolean
 rails g scaffold Notification user_id:integer notification_type:integer description:text is_seen:boolean goto_id:integer
 rails g scaffold Report reporter_id:integer reported_id:integer reason:string comment:text

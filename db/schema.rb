@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171208151551) do
+ActiveRecord::Schema.define(version: 20171223152023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,7 +33,8 @@ ActiveRecord::Schema.define(version: 20171208151551) do
   create_table "conversation_users", force: :cascade do |t|
     t.integer  "conversation_id"
     t.integer  "user_id"
-    t.boolean  "is_admin"
+    t.string   "role"
+    t.integer  "unreads"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
@@ -42,8 +43,12 @@ ActiveRecord::Schema.define(version: 20171208151551) do
     t.string   "name"
     t.text     "description"
     t.boolean  "is_group"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "member_count"
+    t.integer  "message_count"
+    t.text     "last_message"
+    t.datetime "last_message_date"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "credit_histories", force: :cascade do |t|
@@ -56,8 +61,9 @@ ActiveRecord::Schema.define(version: 20171208151551) do
 
   create_table "feeds", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "feed_type"
-    t.integer  "goto_id"
+    t.integer  "source_id"
+    t.string   "feed_type"
+    t.string   "deep_link"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -80,15 +86,17 @@ ActiveRecord::Schema.define(version: 20171208151551) do
   create_table "group_users", force: :cascade do |t|
     t.integer  "group_id"
     t.integer  "user_id"
+    t.string   "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "groups", force: :cascade do |t|
-    t.integer  "creator_id"
+    t.integer  "user_id"
     t.string   "identifier"
     t.string   "name"
     t.text     "description"
+    t.string   "group_type"
     t.string   "tags"
     t.integer  "member_count"
     t.integer  "topic_count"
@@ -97,14 +105,15 @@ ActiveRecord::Schema.define(version: 20171208151551) do
     t.decimal  "lng",          precision: 10, scale: 6
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
+    t.index ["identifier"], name: "index_groups_on_identifier", unique: true, using: :btree
   end
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "notification_type"
+    t.string   "notification_type"
     t.text     "description"
     t.boolean  "is_seen"
-    t.integer  "goto_id"
+    t.string   "deep_link"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
@@ -118,8 +127,9 @@ ActiveRecord::Schema.define(version: 20171208151551) do
   end
 
   create_table "posts", force: :cascade do |t|
+    t.integer  "group_id"
     t.integer  "topic_id"
-    t.integer  "creator_id"
+    t.integer  "user_id"
     t.text     "content"
     t.integer  "likes"
     t.integer  "dislikes"
@@ -131,6 +141,7 @@ ActiveRecord::Schema.define(version: 20171208151551) do
   end
 
   create_table "reports", force: :cascade do |t|
+    t.integer  "group_id"
     t.integer  "reporter_id"
     t.integer  "reported_id"
     t.string   "reason"
@@ -141,9 +152,12 @@ ActiveRecord::Schema.define(version: 20171208151551) do
 
   create_table "topics", force: :cascade do |t|
     t.integer  "group_id"
-    t.integer  "creator_id"
+    t.integer  "user_id"
     t.string   "title"
     t.integer  "topic_type"
+    t.boolean  "is_anonymous"
+    t.boolean  "is_pinned"
+    t.boolean  "is_locked"
     t.string   "tags"
     t.integer  "post_count"
     t.datetime "last_post_date"
@@ -173,6 +187,7 @@ ActiveRecord::Schema.define(version: 20171208151551) do
     t.datetime "updated_at",                               null: false
     t.string   "identifier"
     t.string   "name"
+    t.string   "role"
     t.string   "blurb"
     t.date     "birthday"
     t.integer  "follower_count"
@@ -187,6 +202,7 @@ ActiveRecord::Schema.define(version: 20171208151551) do
     t.integer  "group_count"
     t.boolean  "accepted_tos"
     t.boolean  "verified"
+    t.boolean  "is_banned"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["identifier"], name: "index_users_on_identifier", unique: true, using: :btree

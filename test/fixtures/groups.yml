@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  creator_id: 1
+  user_id: 1
   handle: MyString
   name: MyString
   description: MyText
@@ -12,7 +12,7 @@ one:
   lng: 9.99
 
 two:
-  creator_id: 1
+  user_id: 1
   handle: MyString
   name: MyString
   description: MyText

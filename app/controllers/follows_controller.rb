@@ -40,6 +40,17 @@ class FollowsController < ApplicationController
     @follow.destroy
   end
 
+  # POST /follows/check_request
+  # user_id:
+  # following_id:
+  def check_request
+    if Follow.exists?(following_id: params[:following_id], follower_id: params[:user_id])
+      render json: {status: 'followed'}
+    else
+      render json: { status: 'none'}
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_follow

@@ -42,8 +42,8 @@ class GroupsController < ApplicationController
 
   # POST /groups/fetch
   # sort_by:
-  # offset:
-  # limit:
+  # page:
+  # per_page:
   # query:
   def fetch
     sort = 'created_at DESC'
@@ -59,10 +59,8 @@ class GroupsController < ApplicationController
 
     groups = Group.where("LOWER(name) LIKE ? OR LOWER(identifier) LIKE ?", query, query)
                  .order(sort)
-                 .offset(params[:offset])
-                 .limit(params[:limit])
 
-    render json: groups
+    paginate json: groups
   end
 
   # POST /groups/validate_identifier
@@ -82,6 +80,6 @@ class GroupsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def group_params
-      params.require(:group).permit(:creator_id, :identifier, :name, :description, :group_type, :tags, :member_count, :topic_count, :post_count, :lat, :lng)
+      params.require(:group).permit(:user_id, :identifier, :name, :description, :group_type, :tags, :member_count, :topic_count, :post_count, :lat, :lng)
     end
 end

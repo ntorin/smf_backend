@@ -1,9 +1,8 @@
 class CreateGroups < ActiveRecord::Migration[5.0]
   def change
     create_table :groups do |t|
-      t.integer :creator_id
+      t.integer :user_id
       t.string :identifier
-      add_index :groups, :identifier, unique: true
       t.string :name
       t.text :description
       t.string :group_type
@@ -15,6 +14,7 @@ class CreateGroups < ActiveRecord::Migration[5.0]
       t.decimal :lng, {:precision=>10, :scale=>6}
 
       t.timestamps
+
     end
   end
 end

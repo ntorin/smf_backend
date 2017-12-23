@@ -42,8 +42,8 @@ class UsersController < ApplicationController
   # identifier:
   # name:
   # sort_by:
-  # offset:
-  # limit:
+  # page:
+  # per_page:
   def fetch
     sort = 'created_at DESC'
 
@@ -61,10 +61,8 @@ class UsersController < ApplicationController
 
     users = User.where("LOWER(identifier) LIKE ? OR LOWER(name) LIKE ?", identifier, name)
                 .order(sort)
-                .offset(params[:offset])
-                .limit(params[:limit])
 
-    render json: users
+    paginate json: users
   end
 
   # POST /users/validate_identifier
