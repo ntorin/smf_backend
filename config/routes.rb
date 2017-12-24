@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   post 'groups/fetch', to: 'groups#fetch'
   post 'groups/validate_identifier', to: 'groups#validate_identifier'
 
+  post 'group_users/fetch', to: 'group_users#fetch'
   post 'group_users/check_request', to: 'group_users#check_request'
 
   post 'posts/fetch', to: 'posts#fetch'

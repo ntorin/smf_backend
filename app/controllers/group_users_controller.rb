@@ -41,6 +41,18 @@ class GroupUsersController < ApplicationController
     @group_user.destroy
   end
 
+  # POST /group_users/fetch
+  # group_id:
+  # page:
+  # per_page:
+  def fetch
+    sort = 'post_count DESC'
+
+    group_users = GroupUser.where(group_id: params[:group_id]).order(sort)
+
+    paginate json: group_users
+  end
+
   # POST /group_users/check_request
   # user_id:
   # group_id:
