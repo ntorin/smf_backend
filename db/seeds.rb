@@ -59,6 +59,7 @@ Faker::UniqueGenerator.clear
           identifier: Faker::Lorem.unique.characters(1..16),
           name: Faker::Coffee.blend_name,
           description: Faker::Lorem.sentence,
+          tags: Faker::Coffee.notes,
           member_count: 0,
           topic_count: 0,
           post_count: 0,

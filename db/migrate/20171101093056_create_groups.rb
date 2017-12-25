@@ -5,8 +5,8 @@ class CreateGroups < ActiveRecord::Migration[5.0]
       t.string :identifier
       t.string :name
       t.text :description
-      t.string :group_type
-      t.string :tags
+      t.string :group_type, default: 'public'
+      t.string :tags, default: ''
       t.integer :member_count, default: 0
       t.integer :topic_count, default: 0
       t.integer :post_count, default: 0
