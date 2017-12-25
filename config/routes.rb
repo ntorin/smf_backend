@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   post 'users/fetch', to: 'users#fetch'
   post 'users/validate_identifier', to: 'users#validate_identifier'
 
+  post 'conversations/fetch', to: 'conversations#fetch'
+
   post 'follows/check_request', to: 'follows#check_request'
 
   post 'friends/check_request', to: 'friends#check_request'

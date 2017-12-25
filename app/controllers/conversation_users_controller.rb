@@ -38,6 +38,16 @@ class ConversationUsersController < ApplicationController
     @conversation_user.destroy
   end
 
+  # POST /conversation_users/fetch
+  # conversation_id
+  # page
+  # per_page
+  def fetch
+    conversation_users = paginate ConversationUser.where(conversation_id: params[:conversation_id])
+
+    render json: conversation_users.to_json(:include => :user)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_conversation_user
