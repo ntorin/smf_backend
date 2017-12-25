@@ -7,11 +7,11 @@ class CreateGroups < ActiveRecord::Migration[5.0]
       t.text :description
       t.string :group_type
       t.string :tags
-      t.integer :member_count
-      t.integer :topic_count
-      t.integer :post_count
-      t.decimal :lat, {:precision=>10, :scale=>6}
-      t.decimal :lng, {:precision=>10, :scale=>6}
+      t.integer :member_count, default: 0
+      t.integer :topic_count, default: 0
+      t.integer :post_count, default: 0
+      t.decimal :lat, {:precision=>10, :scale=>6}, default: 0
+      t.decimal :lng, {:precision=>10, :scale=>6}, default: 0
 
       t.timestamps
 

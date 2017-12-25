@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20171223152023) do
 
   create_table "conversation_messages", force: :cascade do |t|
     t.integer  "conversation_id"
-    t.integer  "sender_id"
+    t.integer  "user_id"
     t.text     "message"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
@@ -43,12 +43,12 @@ ActiveRecord::Schema.define(version: 20171223152023) do
     t.string   "name"
     t.text     "description"
     t.boolean  "is_group"
-    t.integer  "member_count"
-    t.integer  "message_count"
+    t.integer  "member_count",      default: 0
+    t.integer  "message_count",     default: 0
     t.text     "last_message"
     t.datetime "last_message_date"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "credit_histories", force: :cascade do |t|
@@ -131,13 +131,13 @@ ActiveRecord::Schema.define(version: 20171223152023) do
     t.integer  "topic_id"
     t.integer  "user_id"
     t.text     "content"
-    t.integer  "likes"
-    t.integer  "dislikes"
+    t.integer  "likes",        default: 0
+    t.integer  "dislikes",     default: 0
     t.boolean  "is_op"
     t.boolean  "is_anonymous"
     t.datetime "edit_date"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "reports", force: :cascade do |t|

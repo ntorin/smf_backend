@@ -5,8 +5,8 @@ class CreatePosts < ActiveRecord::Migration[5.0]
       t.integer :topic_id
       t.integer :user_id
       t.text :content
-      t.integer :likes
-      t.integer :dislikes
+      t.integer :likes, default: 0
+      t.integer :dislikes, default: 0
       t.boolean :is_op
       t.boolean :is_anonymous
       t.datetime :edit_date
