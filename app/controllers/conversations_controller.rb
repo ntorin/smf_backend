@@ -62,7 +62,7 @@ class ConversationsController < ApplicationController
     end
 
     conversations = Conversation.joins(:conversation_users)
-                        .where(:conversation_users => {user_id: params[:user]})
+                        .where(:conversation_users => {user_id: params[:user_id]})
                         .order(sort)
 
     paginate json: conversations
