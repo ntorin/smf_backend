@@ -1,4 +1,4 @@
-[Group, User, Topic, Post, Friend, Follow, GroupUser].each do |table|
+[Group, User, Topic, Post, Friend, Follow, GroupUser, Conversation, ConversationUser].each do |table|
   ActiveRecord::Base.connection.execute("TRUNCATE #{table.table_name}")
   ActiveRecord::Base.connection.reset_pk_sequence!(table.table_name)
 end
@@ -55,7 +55,7 @@ Faker::UniqueGenerator.clear
 
   group = Group.create(
       {
-          user_id: Faker::Number.between(0, 101),
+          user_id: Faker::Number.between(1, 100),
           identifier: Faker::Lorem.unique.characters(1..16),
           name: Faker::Coffee.blend_name,
           description: Faker::Lorem.sentence,
@@ -80,7 +80,7 @@ Faker::UniqueGenerator.clear
     GroupUser.create(
         {
             group_id: group.id,
-            user_id: Faker::Number.between(0, 101),
+            user_id: Faker::Number.between(1, 100),
             role: Faker::Boolean.boolean(0.8) ? 'user' : Faker::Boolean.boolean(0.8) ? 'moderator' : 'admin'
         }
     )
@@ -90,7 +90,7 @@ Faker::UniqueGenerator.clear
     topic = Topic.create(
              {
                  group_id: group.id,
-                 user_id: Faker::Number.between(0, 101),
+                 user_id: Faker::Number.between(1, 100),
                  title: Faker::Lorem.sentence,
                  topic_type: 0,
                  is_anonymous: Faker::Boolean.boolean,
@@ -117,7 +117,7 @@ Faker::UniqueGenerator.clear
               {
                   group_id: group.id,
                   topic_id: topic.id,
-                  user_id: Faker::Number.between(0, 101),
+                  user_id: Faker::Number.between(1, 100),
                   content: Faker::Lorem.paragraph,
                   likes: 0,
                   dislikes: 0,
@@ -132,18 +132,26 @@ end
 5000.times do |fo|
   Follow.create(
             {
-                follower_id: Faker::Number.between(0, 101),
-                following_id: Faker::Number.between(0, 101)
+                follower_id: Faker::Number.between(1, 100),
+                following_id: Faker::Number.between(1, 100)
             }
   )
 end
 
 5000.times do |fr|
-  Friend.create(
+  friend = Friend.create(
             {
-                friend_one: Faker::Number.between(0, 101),
-                friend_two: Faker::Number.between(0, 101),
+                friend_one: Faker::Number.between(1, 100),
+                friend_two: Faker::Number.between(1, 100),
                 is_accepted: Faker::Boolean.boolean(0.2)
             }
   )
+
+  if friend.is_accepted
+    friend_one = User.find(friend.friend_one)
+    friend_two = User.find(friend.friend_two)
+    conversation = Conversation.create({name: friend_one.name + ', ' + friend_two.name})
+    ConversationUser.create({conversation_id: conversation.id, user_id: friend_one.id})
+    ConversationUser.create({conversation_id: conversation.id, user_id: friend_two.id})
+  end
 end
