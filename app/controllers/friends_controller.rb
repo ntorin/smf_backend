@@ -19,6 +19,7 @@ class FriendsController < ApplicationController
 
     if !request.blank? # check if other user sent friend request previously; if they did, accept the request
       request.update(is_accepted: true)
+      create_conversation(params[:friend][:friend_one], params[:friend][:friend_one])
 
       render json: request
     elsif !Friend.exists?(friend_one: params[:friend][:friend_one], friend_two: params[:friend][:friend_two]) # if the request isn't a duplicate, create a new one
@@ -63,18 +64,6 @@ class FriendsController < ApplicationController
         friends = paginate Friend.where("friend_one = ? AND is_accepted = false", params[:user_id])
     end
 
-    #friend_users = []
-
-    #friends.each do |f|
-    #  if f.friend_one == params[:user_id]
-    #    friend_users.push(f.friend_two)
-    #  else
-    #    friend_users.push(f.friend_one)
-    #  end
-    #end
-
-    #users = User.where(id: friend_users)
-
     render json: friends.to_json(:include => :friend)
   end
 
@@ -107,9 +96,18 @@ class FriendsController < ApplicationController
 
     if !request.is_accepted
       request.update(is_accepted: true)
+      create_conversation(request.friend_one, request.friend_two)
 
       render json: request
     end
+  end
+
+  def create_conversation(friend_one, friend_two)
+    friend_one = User.find(friend_one)
+    friend_two = User.find(friend_two)
+    conversation = Conversation.create({name: friend_one.name + ', ' + friend_two.name})
+    ConversationUser.create({conversation_id: conversation.id, user_id: friend_one.id})
+    ConversationUser.create({conversation_id: conversation.id, user_id: friend_two.id})
   end
 
   private

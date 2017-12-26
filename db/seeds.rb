@@ -129,7 +129,7 @@ Faker::UniqueGenerator.clear
   end
 end
 
-100.times do |fo|
+5000.times do |fo|
   Follow.create(
             {
                 follower_id: Faker::Number.between(0, 101),
@@ -138,7 +138,7 @@ end
   )
 end
 
-100.times do |fr|
+5000.times do |fr|
   Friend.create(
             {
                 friend_one: Faker::Number.between(0, 101),

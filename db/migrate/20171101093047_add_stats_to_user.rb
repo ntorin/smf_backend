@@ -6,6 +6,7 @@ class AddStatsToUser < ActiveRecord::Migration[5.0]
     add_column :users, :role, :string, default: 'user'
     add_column :users, :blurb, :string
     add_column :users, :birthday, :date
+    add_column :users, :referral_count, :integer, default: 0
     add_column :users, :follower_count, :integer, default: 0
     add_column :users, :following_count, :integer, default: 0
     add_column :users, :friend_count, :integer, default: 0
