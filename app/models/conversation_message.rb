@@ -3,7 +3,7 @@ class ConversationMessage < ApplicationRecord
   after_update :emit_update
   after_destroy :decrement_values
 
-  has_one :user
+  belongs_to :user
 
   def increment_values
     Conversation.increment_counter(:message_count, self.conversation_id)
