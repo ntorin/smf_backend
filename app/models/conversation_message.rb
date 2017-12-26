@@ -3,6 +3,8 @@ class ConversationMessage < ApplicationRecord
   after_update :emit_update
   after_destroy :decrement_values
 
+  has_one :user
+
   def increment_values
     Conversation.increment_counter(:message_count, self.conversation_id)
     Conversation.find(self.conversation_id).update(last_message_date: DateTime.now, last_message: self.message)

@@ -44,7 +44,7 @@ class ConversationMessagesController < ApplicationController
   # per_page
   def fetch
     messages = paginate ConversationMessage.where(conversation_id: params[:conversation_id])
-                   .sort('created_at DESC')
+                   .order('created_at DESC')
     render json: messages.to_json(:include => :user)
   end
 

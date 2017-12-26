@@ -24,6 +24,8 @@ Rails.application.routes.draw do
 
   post 'conversations/fetch', to: 'conversations#fetch'
 
+  post 'conversation_messages/fetch', to: 'conversation_messages#fetch'
+
   post 'follows/check_request', to: 'follows#check_request'
 
   post 'friends/check_request', to: 'friends#check_request'
