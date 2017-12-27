@@ -53,13 +53,6 @@ class ConversationsController < ApplicationController
     end
 
     query = '%' + params[:query].downcase + '%'
-    conversation_users = ConversationUser.where(user_id: params[:user_id])
-
-    conversation_ids = []
-
-    conversation_users.each do |cu|
-      conversation_ids.push(cu.conversation_id)
-    end
 
     conversations = Conversation.joins(:conversation_users)
                         .where(:conversation_users => {user_id: params[:user_id]})

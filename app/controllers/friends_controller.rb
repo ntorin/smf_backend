@@ -50,8 +50,8 @@ class FriendsController < ApplicationController
   # POST /friends/fetch
   # user_id:
   # fetch_type:
-  # offset:
-  # limit:
+  # page:
+  # per_page:
   def fetch
     friends = [{}]
 

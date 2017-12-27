@@ -40,6 +40,15 @@ class FollowsController < ApplicationController
     @follow.destroy
   end
 
+  # POST /follows/fetch
+  # user_id:
+  # page:
+  # per_page:
+  def fetch
+    follows = Follow.where(follower_id: params[:user_id])
+    paginate json: follows.to_json(:include => :following)
+  end
+
   # POST /follows/check_request
   # user_id:
   # following_id:

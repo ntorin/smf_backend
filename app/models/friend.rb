@@ -14,4 +14,15 @@ class Friend < ApplicationRecord
     User.decrement_counter(:friend_count, self.friend_one)
     User.decrement_counter(:friend_count, self.friend_two)
   end
+
+  def as_json(options = {})
+    h = super(options)
+    if 16 == self.friend_one
+      h[:friend] = User.find(self.friend_two)
+    else
+      h[:friend] = User.find(self.friend_one)
+    end
+
+    return h
+  end
 end

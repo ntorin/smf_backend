@@ -48,9 +48,9 @@ class GroupUsersController < ApplicationController
   def fetch
     sort = 'post_count DESC'
 
-    group_users = GroupUser.where(group_id: params[:group_id]).order(sort)
+    group_users = paginate GroupUser.where(group_id: params[:group_id]).order(sort)
 
-    paginate json: group_users
+    render json: group_users.to_json(:include => :user)
   end
 
   # POST /group_users/check_request
