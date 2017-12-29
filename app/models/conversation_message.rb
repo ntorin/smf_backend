@@ -7,7 +7,7 @@ class ConversationMessage < ApplicationRecord
 
   def increment_values
     Conversation.increment_counter(:message_count, self.conversation_id)
-    Conversation.find(self.conversation_id).update(last_message_date: DateTime.now, last_message: self.message)
+    Conversation.find(self.conversation_id).update(last_message_date: DateTime.now, last_message: self.message[0..50])
 
     ConversationUser.where(conversation_id: self.conversation_id).find_each do |u|
       ConversationUser.increment_counter(:unreads, u.id)

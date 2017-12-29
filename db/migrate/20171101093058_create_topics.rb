@@ -5,6 +5,7 @@ class CreateTopics < ActiveRecord::Migration[5.0]
       t.integer :user_id
       t.string :title
       t.string :topic_type
+      t.string :preview
       t.boolean :is_anonymous
       t.boolean :is_pinned, default: false
       t.boolean :is_locked, default: false
