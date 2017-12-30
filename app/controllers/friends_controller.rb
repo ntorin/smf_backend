@@ -1,5 +1,5 @@
 class FriendsController < ApplicationController
-  before_action :authenticate_user!
+  #before_action :authenticate_user!
   before_action :set_friend, only: [:show, :update, :destroy]
 
   # GET /friends
