@@ -58,7 +58,7 @@ class GroupUsersController < ApplicationController
   # user_id:e
   # group_id:
   def check_request
-    group_user = GroupUser.where(group_id: params[:group_id], user_id: params[:user_id])
+    group_user = GroupUser.where(group_id: params[:group_id], user_id: params[:user_id]).first
     if group_user.present?
       if Group.exists?(id: params[:group_id], user_id: params[:user_id])
         render json: { group_user: group_user, status: 'creator'}
