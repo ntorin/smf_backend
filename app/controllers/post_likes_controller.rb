@@ -1,4 +1,5 @@
 class PostLikesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_post_like, only: [:show, :update, :destroy]
 
   # GET /post_likes

@@ -17,7 +17,7 @@ class Friend < ApplicationRecord
 
   def as_json(options = {})
     h = super(options)
-    if 16 == self.friend_one
+    if 1 == self.friend_one
       h[:friend] = User.find(self.friend_two)
     else
       h[:friend] = User.find(self.friend_one)

@@ -1,4 +1,5 @@
 class FollowsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_follow, only: [:show, :update, :destroy]
 
   # GET /follows
@@ -53,8 +54,9 @@ class FollowsController < ApplicationController
   # user_id:
   # following_id:
   def check_request
-    if Follow.exists?(following_id: params[:following_id], follower_id: params[:user_id])
-      render json: {status: 'followed'}
+    follow = Follow.where(following_id: params[:following_id], follower_id: params[:user_id]).first
+    if follow.present?
+      render json: {follow: follow, status: 'followed'}
     else
       render json: { status: 'none'}
     end

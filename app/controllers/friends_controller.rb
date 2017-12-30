@@ -1,4 +1,5 @@
 class FriendsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_friend, only: [:show, :update, :destroy]
 
   # GET /friends
@@ -74,14 +75,14 @@ class FriendsController < ApplicationController
     request = Friend.where("(friend_one = ? AND friend_two = ?) OR (friend_one = ? AND friend_two = ?)",
                            params[:user_id], params[:friend_id],
                            params[:friend_id], params[:user_id]).first
-    if request.exists
+    if request.present?
       if request.is_accepted
-        render json: { status: 'friends'}
+        render json: { friend: request, status: 'friends'}
       else
         if request.friend_one == params[:user_id]
-          render json: { status: 'awaiting response'}
+          render json: { friend: request, status: 'awaiting response'}
         else
-          render json: { status: 'accept request'}
+          render json: { friend: request, status: 'accept request'}
         end
       end
     else
