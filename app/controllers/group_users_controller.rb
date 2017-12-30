@@ -55,14 +55,15 @@ class GroupUsersController < ApplicationController
   end
 
   # POST /group_users/check_request
-  # user_id:
+  # user_id:e
   # group_id:
   def check_request
-    if GroupUser.exists?(group_id: params[:group_id], user_id: params[:user_id])
+    group_user = GroupUser.wher(group_id: params[:group_id], user_id: params[:user_id])
+    if group_user.present?
       if Group.exists?(id: params[:group_id], user_id: params[:user_id])
-        render json: { status: 'creator'}
+        render json: { group_user: group_user, status: 'creator'}
       else
-        render json: { status: 'joined'}
+        render json: { group_user: group_user, status: 'joined'}
       end
     else
       render json: { status: 'none'}
