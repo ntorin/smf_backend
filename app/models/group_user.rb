@@ -9,7 +9,7 @@ class GroupUser < ApplicationRecord
     Group.increment_counter(:member_count, self.group_id)
     User.increment_counter(:group_count, self.user_id)
 
-    Feed.create({user_id: self.user_id, source_id: self.group_id, feed_type: 'group-join', deep_link: 'group/' + self.id.to_s})
+    Feed.create({user_id: self.user_id, group_id: self.group_id, source_id: self.group_id, feed_type: 'group-join', deep_link: 'group/' + self.id.to_s})
   end
 
   def decrement_values

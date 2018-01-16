@@ -41,6 +41,7 @@ class FeedsController < ApplicationController
   # POST /feeds/fetch
   # user_id
   # fetch_type
+  # activty_id
   # page
   # per_page
   def fetch
@@ -80,6 +81,11 @@ class FeedsController < ApplicationController
         feeds = paginate Feed.where(user_id: ids).order('created_at DESC')
       when 'follows'
         feeds = paginate Feed.joins(:follow).where(:follows => {follower_id: params[:user_id]}).order('created_at DESC')
+      when 'user'
+        feeds = paginate Feed.where(user_id: params[:activity_id])
+      when 'group'
+        feeds = paginate Feed.where(group_id: params[:activity_id])
+
     end
 
     render json: feeds
@@ -93,6 +99,6 @@ class FeedsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def feed_params
-      params.require(:feed).permit(:user_id, :feed_type, :goto_id)
+      params.require(:feed).permit(:user_id, :group_id, :source_id, :feed_type, :deep_link)
     end
 end

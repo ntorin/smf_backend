@@ -33,22 +33,22 @@ ActiveRecord::Schema.define(version: 20171223152023) do
   create_table "conversation_users", force: :cascade do |t|
     t.integer  "conversation_id"
     t.integer  "user_id"
-    t.string   "role"
-    t.integer  "unreads"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "role",            default: "user"
+    t.integer  "unreads",         default: 0
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   create_table "conversations", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
-    t.boolean  "is_group"
+    t.boolean  "is_group",          default: false
     t.integer  "member_count",      default: 0
     t.integer  "message_count",     default: 0
     t.text     "last_message"
     t.datetime "last_message_date"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   create_table "credit_histories", force: :cascade do |t|
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20171223152023) do
 
   create_table "feeds", force: :cascade do |t|
     t.integer  "user_id"
+    t.integer  "group_id"
     t.integer  "source_id"
     t.string   "feed_type"
     t.string   "deep_link"
@@ -78,17 +79,17 @@ ActiveRecord::Schema.define(version: 20171223152023) do
   create_table "friends", force: :cascade do |t|
     t.integer  "friend_one"
     t.integer  "friend_two"
-    t.boolean  "is_accepted"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.boolean  "is_accepted", default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "group_users", force: :cascade do |t|
     t.integer  "group_id"
     t.integer  "user_id"
-    t.string   "role"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "role",       default: "user"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "groups", force: :cascade do |t|
@@ -96,15 +97,16 @@ ActiveRecord::Schema.define(version: 20171223152023) do
     t.string   "identifier"
     t.string   "name"
     t.text     "description"
-    t.string   "group_type"
-    t.string   "tags"
-    t.integer  "member_count"
-    t.integer  "topic_count"
-    t.integer  "post_count"
-    t.decimal  "lat",          precision: 10, scale: 6
-    t.decimal  "lng",          precision: 10, scale: 6
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.string   "group_type",                  default: "public"
+    t.string   "tags",                        default: ""
+    t.integer  "member_count",                default: 0
+    t.integer  "topic_count",                 default: 0
+    t.integer  "post_count",                  default: 0
+    t.decimal  "lat",                         default: "0.0"
+    t.decimal  "{:precision=>10, :scale=>6}", default: "0.0"
+    t.decimal  "lng",                         default: "0.0"
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
     t.index ["identifier"], name: "index_groups_on_identifier", unique: true, using: :btree
   end
 
@@ -154,15 +156,16 @@ ActiveRecord::Schema.define(version: 20171223152023) do
     t.integer  "group_id"
     t.integer  "user_id"
     t.string   "title"
-    t.integer  "topic_type"
+    t.string   "topic_type"
+    t.string   "preview"
     t.boolean  "is_anonymous"
-    t.boolean  "is_pinned"
-    t.boolean  "is_locked"
+    t.boolean  "is_pinned",      default: false
+    t.boolean  "is_locked",      default: false
     t.string   "tags"
-    t.integer  "post_count"
+    t.integer  "post_count",     default: 0
     t.datetime "last_post_date"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -187,22 +190,23 @@ ActiveRecord::Schema.define(version: 20171223152023) do
     t.datetime "updated_at",                               null: false
     t.string   "identifier"
     t.string   "name"
-    t.string   "role"
+    t.string   "role",                   default: "user"
     t.string   "blurb"
     t.date     "birthday"
-    t.integer  "follower_count"
-    t.integer  "following_count"
-    t.integer  "friend_count"
-    t.integer  "credits"
-    t.integer  "credit_multiplier"
-    t.integer  "total_likes"
-    t.integer  "total_dislikes"
-    t.integer  "topic_count"
-    t.integer  "post_count"
-    t.integer  "group_count"
-    t.boolean  "accepted_tos"
-    t.boolean  "verified"
-    t.boolean  "is_banned"
+    t.integer  "referral_count",         default: 0
+    t.integer  "follower_count",         default: 0
+    t.integer  "following_count",        default: 0
+    t.integer  "friend_count",           default: 0
+    t.integer  "credits",                default: 0
+    t.integer  "credit_multiplier",      default: 1
+    t.integer  "total_likes",            default: 0
+    t.integer  "total_dislikes",         default: 0
+    t.integer  "topic_count",            default: 0
+    t.integer  "post_count",             default: 0
+    t.integer  "group_count",            default: 0
+    t.boolean  "accepted_tos",           default: false
+    t.boolean  "verified",               default: false
+    t.boolean  "is_banned",              default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["identifier"], name: "index_users_on_identifier", unique: true, using: :btree
