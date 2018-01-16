@@ -11,17 +11,19 @@ class Feed < ApplicationRecord
 
   def as_json(options = {})
     h = super(options)
-    feed_type = self.feed_type.split(/-/)[0]
-    case feed_type
-      when 'topic'
-        topic = Topic.find(self.source_id)
-        h[:feed] = topic
-      when 'group'
-        group = Group.find(self.source_id)
-        h[:feed] = group
-      when 'post'
-        post = Post.find(self.source_id)
-        h[:feed] = post
+    if !self.feed_type == nil
+      feed_type = self.feed_type.split(/-/)[0]
+      case feed_type
+        when 'topic'
+          topic = Topic.find(self.source_id)
+          h[:feed] = topic
+        when 'group'
+          group = Group.find(self.source_id)
+          h[:feed] = group
+        when 'post'
+          post = Post.find(self.source_id)
+          h[:feed] = post
+      end
     end
     return h
   end
