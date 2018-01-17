@@ -11,7 +11,10 @@ class Post < ApplicationRecord
     User.increment_counter(:post_count, self.user_id)
 
     Topic.find(self.topic_id).update(preview: self.content[0..50], last_post_date: DateTime.now)
+
     User.update_counters(self.user_id, credits: 1000)
+    CreditHistory.create({user_id: self.user_id, transaction: 1000, description: 'post'})
+
     Feed.create({user_id: self.user_id, group_id: self.group_id, source_id: self.id, feed_type: 'post-create', deep_link: 'post/' + self.id.to_s})
   end
 

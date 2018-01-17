@@ -88,7 +88,7 @@ class FeedsController < ApplicationController
 
     end
 
-    render json: feeds
+    render json: feeds.to_json(:include => :user)
   end
 
   private
