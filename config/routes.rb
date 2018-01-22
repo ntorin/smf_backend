@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   resources :credit_histories
   resources :users
 
+  mount ActionCable.server => '/cable'
+
   mount_devise_token_auth_for 'User', at: 'auth'
 
   post 'users/fetch', to: 'users#fetch'
