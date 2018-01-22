@@ -78,6 +78,6 @@ Rails.application.configure do
   config.action_cable.disable_request_forgery_protection = true
 
   config.action_cable.allowed_request_origins = [/.*/]
-  config.web_socket_server_url = "ws://api.citru.me/cable"
+  config.web_socket_server_url = "wss://api.citru.me/cable"
 
 end
