@@ -13,16 +13,20 @@ class ConversationMessage < ApplicationRecord
       ConversationUser.increment_counter(:unreads, u.id)
     end
 
-    ActionCable.server.broadcast("conversation_#{self.conversation_id}", {message: self, type: 'create'})
+    user = User.find(self.user_id)
+
+    ActionCable.server.broadcast("conversation_#{self.conversation_id}", {message: self, name: user.name, type: 'create'})
   end
 
   def emit_update
-    ActionCable.server.broadcast("conversation_#{self.conversation_id}", {message: self, type: 'update'})
+    user = User.find(self.user_id)
+    ActionCable.server.broadcast("conversation_#{self.conversation_id}", {message: self, name: user.name, type: 'update'})
   end
 
   def decrement_values
+    user = User.find(self.user_id)
     Conversation.decrement_counter(:message_count, self.conversation_id)
 
-    ActionCable.server.broadcast("conversation_#{self.conversation_id}", {message: self, type: 'destroy'})
+    ActionCable.server.broadcast("conversation_#{self.conversation_id}", {message: self, name: user.name, type: 'destroy'})
   end
 end
