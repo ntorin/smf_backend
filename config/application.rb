@@ -26,5 +26,15 @@ module Smf
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.to_prepare do
+      DeviseTokenAuth::SessionsController.skip_before_action :authenticate_user!
+      DeviseTokenAuth::RegistrationsController.skip_before_action :authenticate_user!
+      DeviseTokenAuth::ConfirmationsController.skip_before_action :authenticate_user!
+      DeviseTokenAuth::OmniauthCallbacksController.skip_before_action :authenticate_user!
+      DeviseTokenAuth::PasswordsController.skip_before_action :authenticate_user!
+      DeviseTokenAuth::TokenValidationsController.skip_before_action :authenticate_user!
+    end
+
   end
 end
