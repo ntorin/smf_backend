@@ -13,11 +13,14 @@ class Post < ApplicationRecord
     Topic.find(self.topic_id).update(preview: self.content[0..50], last_post_date: DateTime.now)
 
     User.update_counters(self.user_id, credits: 1000)
-    CreditHistory.create({user_id: self.user_id, transaction: 1000, description: 'post'})
+    CreditHistory.create({user_id: self.user_id, credit_transaction: 1000, description: 'post'})
 
     if User.find(self.user_id).post_count <= 100
       ref = Referral.where(user_id: self.user_id)
-      User.update_counters(ref.referrer_id, credits: 1000)
+      if ref.exists?
+        User.update_counters(ref.referrer_id, credits: 1000)
+        CreditHistory.create({user_id: ref.referrer_id, credit_transaction: 1000, description: 'referral-post'})
+      end
     end
 
     Feed.create({user_id: self.user_id, group_id: self.group_id, source_id: self.id, feed_type: 'post-create', deep_link: 'post/' + self.id.to_s})

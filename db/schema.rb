@@ -53,10 +53,10 @@ ActiveRecord::Schema.define(version: 20180124120257) do
 
   create_table "credit_histories", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "transaction"
+    t.integer  "credit_transaction"
     t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   create_table "feeds", force: :cascade do |t|
@@ -88,6 +88,8 @@ ActiveRecord::Schema.define(version: 20180124120257) do
     t.integer  "group_id"
     t.integer  "user_id"
     t.string   "role",       default: "user"
+    t.boolean  "is_kicked",  default: false
+    t.boolean  "is_banned",  default: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
   end
@@ -112,6 +114,8 @@ ActiveRecord::Schema.define(version: 20180124120257) do
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "user_id"
+    t.integer  "group_id"
+    t.integer  "source_id"
     t.string   "notification_type"
     t.text     "description"
     t.boolean  "is_seen"

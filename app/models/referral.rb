@@ -1,7 +1,9 @@
 class Referral < ApplicationRecord
-  after_create :send_notifications
+  after_create :increment_values
 
-  def send_notifications
+  def increment_values
+    User.increment_counter(:referral_count, self.referrer_id)
+
     Notification.create({
                             user_id: self.referrer_id,
                             group_id: -1,

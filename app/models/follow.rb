@@ -18,7 +18,7 @@ class Follow < ApplicationRecord
                             notification_type: 'follow-create',
                             description: 'A user has followed you.',
                             is_seen: false,
-                            deep_link: 'user/' + self.friend_two.to_s
+                            deep_link: 'user/' + self.follower_id.to_s
                         })
   end
 
