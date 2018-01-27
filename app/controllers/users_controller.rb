@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  #before_action :authenticate_user!
   before_action :set_user, only: [:show, :update]
+  #load_and_authorize_resource
 
   # GET /users
   def index
@@ -67,12 +67,17 @@ class UsersController < ApplicationController
   end
 
   # POST /users/validate_identifier
+  # identifier
   def validate_identifier
-     if User.where("LOWER(identifier) = ?", params[:identifier].downcase).exists?
-       render json: { message: 'Identifier is already taken.', valid: false }
-     else
-       render json: { message: 'Identifier is available.', valid: true }
-     end
+    if params[:identifier].match(/\A[a-zA-Z0-9_]{1,16}\z/)
+    if User.where("LOWER(identifier) = ?", params[:identifier].downcase).exists?
+      render json: { message: 'Identifier is already taken.', valid: false }
+    else
+      render json: { message: 'Identifier is available.', valid: true }
+    end
+    else
+      render json: { message: 'Identifier can only contain letters, numbers, and underscores between (1-16 characters)', valid: false}
+    end
   end
 
   private

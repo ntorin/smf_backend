@@ -1,6 +1,7 @@
 class Friend < ApplicationRecord
   after_create :increment_values
   after_destroy :decrement_values
+  after_update :send_notifications
 
   belongs_to :user
   belongs_to :friend, class_name: 'User', :foreign_key => 'friend_two'
@@ -8,6 +9,8 @@ class Friend < ApplicationRecord
   def increment_values
     User.increment_counter(:friend_count, self.friend_one)
     User.increment_counter(:friend_count, self.friend_two)
+
+
   end
 
   def decrement_values
@@ -15,9 +18,23 @@ class Friend < ApplicationRecord
     User.decrement_counter(:friend_count, self.friend_two)
   end
 
+  def send_notifications
+    if self.is_accepted_changed? && self.is_accepted
+      Notification.create({
+                              user_id: self.friend_one,
+                              group_id: -1,
+                              source_id: self.friend_two,
+                              notification_type: 'friend-create',
+                              description: 'Your friend request has been accepted.',
+                              is_seen: false,
+                              deep_link: 'user/' + self.friend_two.to_s
+                          })
+    end
+  end
+
   def as_json(options = {})
     h = super(options)
-    if 1 == self.friend_one
+    if current_user.id == self.friend_one
       h[:friend] = User.find(self.friend_two)
     else
       h[:friend] = User.find(self.friend_one)

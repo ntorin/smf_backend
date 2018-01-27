@@ -40,8 +40,13 @@ class NotificationsController < ApplicationController
   end
   
   # POST /notifications/fetch
+  # user_id
+  # page
+  # per_page
   def fetch
-    
+    notifications = Notification.where(user_id: params[:user_id])
+                        .order('created_at DESC')
+    paginate json: notifications
   end
 
   private

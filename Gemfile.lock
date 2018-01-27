@@ -52,7 +52,6 @@ GEM
     bcrypt (3.1.11)
     builder (3.2.3)
     byebug (9.1.0)
-    cancancan (2.1.2)
     capistrano (3.10.0)
       airbrussh (>= 1.0.0)
       i18n
@@ -209,7 +208,6 @@ DEPENDENCIES
   api-pagination
   attr_encrypted (~> 3.0.0)
   byebug
-  cancancan (~> 2.0)
   capistrano
   capistrano-bundler
   capistrano-rails

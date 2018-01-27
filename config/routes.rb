@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :referrals
   resources :group_users
   resources :friends
   resources :conversation_messages
@@ -44,6 +45,8 @@ Rails.application.routes.draw do
   post 'group_users/check_request', to: 'group_users#check_request'
 
   post 'posts/fetch', to: 'posts#fetch'
+
+  post 'referrals/check_user', to: 'referrals#check_user'
 
   post 'topics/fetch', to: 'topics#fetch'
 end

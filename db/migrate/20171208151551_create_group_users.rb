@@ -4,6 +4,8 @@ class CreateGroupUsers < ActiveRecord::Migration[5.0]
       t.integer :group_id
       t.integer :user_id
       t.string :role, default: 'user'
+      t.boolean :is_kicked, default: false
+      t.boolean :is_banned, default: false
 
       t.timestamps
     end
