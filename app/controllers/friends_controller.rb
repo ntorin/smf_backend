@@ -65,7 +65,7 @@ class FriendsController < ApplicationController
         friends = paginate Friend.where("friend_one = ? AND is_accepted = false", params[:user_id])
     end
 
-    render json: friends.to_json(:include => :friend)
+    render json: friends.to_json(:include => :friend, :requester_id => params[:user_id])
   end
 
   # POST /follows/check_request
