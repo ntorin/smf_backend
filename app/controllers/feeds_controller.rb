@@ -67,7 +67,7 @@ class FeedsController < ApplicationController
           end
         end
 
-        feeds = paginate Feed.where(user_id: ids).order(:created_at, :desc)
+        feeds = paginate Feed.where(user_id: ids).order('created_at DESC')
       when 'friends'
         ids = []
         friends = Friend.where("(friend_one = ? OR friend_two = ?) AND is_accepted = true", params[:user_id], params[:user_id])
@@ -78,13 +78,13 @@ class FeedsController < ApplicationController
             ids.push(f.friend_one)
           end
         end
-        feeds = paginate Feed.where(user_id: ids).order(:created_at, :desc)
+        feeds = paginate Feed.where(user_id: ids).order('created_at DESC')
       when 'follows'
-        feeds = paginate Feed.joins(:follow).where(:follows => {follower_id: params[:user_id]}).order(:created_at, :desc)
+        feeds = paginate Feed.joins(:follow).where(:follows => {follower_id: params[:user_id]}).order('created_at DESC')
       when 'user'
-        feeds = paginate Feed.where(user_id: params[:activity_id]).order(:created_at, :desc)
+        feeds = paginate Feed.where(user_id: params[:activity_id]).order('created_at DESC')
       when 'group'
-        feeds = paginate Feed.where(group_id: params[:activity_id]).order(:created_at, :desc)
+        feeds = paginate Feed.where(group_id: params[:activity_id]).order('created_at DESC')
 
     end
 
