@@ -66,9 +66,9 @@ class FollowsController < ApplicationController
   # user_id:
   # page:
   def my_follows
-    follows = Follow.where(follower_id: params[:user_id])
+    follows = paginate Follow.where(follower_id: params[:user_id])
 
-    paginate json: follows.to_json(:include => :following)
+    render json: follows.to_json(:include => :following)
   end
 
   private

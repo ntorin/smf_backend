@@ -69,7 +69,7 @@ class GroupsController < ApplicationController
   # user_id:
   # page:
   def my_groups
-    groups = Group.joins(:group_user).where(:group_users => {user_id: params[:user_id]})
+    groups = Group.joins(:group_users).where(:group_users => {user_id: params[:user_id]})
 
     paginate json: groups
   end
