@@ -12,6 +12,7 @@ Group.create(
         identifier: 'global',
         name: 'Global BBS',
         description: 'Talk about anything.',
+        tags: 'global',
         member_count: 0,
         topic_count: 0,
         post_count: 0,

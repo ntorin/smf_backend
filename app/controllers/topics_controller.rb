@@ -43,6 +43,7 @@ class TopicsController < ApplicationController
   # page:
   # per_page:
   # query:
+  # pinned:
   def fetch
     sort = 'last_post_date DESC'
 
@@ -52,9 +53,15 @@ class TopicsController < ApplicationController
       else
     end
 
-    topics = paginate Topic.where("group_id = ? AND LOWER(title) LIKE ?", params[:group_id], '%' + params[:query].to_s.downcase + '%')
-                 .joins(:user)
-                 .order(sort)
+    if params[:pinned]
+      topics = paginate Topic.where("group_id = ? AND LOWER(title) LIKE ? AND is_pinned = TRUE", params[:group_id], '%' + params[:query].to_s.downcase + '%')
+                            .joins(:user)
+                            .order(sort)
+    else
+      topics = paginate Topic.where("group_id = ? AND LOWER(title) LIKE ?", params[:group_id], '%' + params[:query].to_s.downcase + '%')
+                            .joins(:user)
+                            .order(sort)
+    end
 
     render json: topics.to_json(:include => :user)
   end

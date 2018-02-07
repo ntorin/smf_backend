@@ -33,6 +33,7 @@ Rails.application.routes.draw do
 
   post 'follows/check_request', to: 'follows#check_request'
   post 'follows/fetch', to: 'follows#fetch'
+  post 'follows/my_follows', to: 'follows#my_follows'
 
   post 'friends/check_request', to: 'friends#check_request'
   post 'friends/accept_request', to: 'friends#accept_request'
@@ -40,6 +41,7 @@ Rails.application.routes.draw do
 
   post 'groups/fetch', to: 'groups#fetch'
   post 'groups/validate_identifier', to: 'groups#validate_identifier'
+  post 'groups/my_groups', to: 'groups#my_groups'
 
   post 'group_users/fetch', to: 'group_users#fetch'
   post 'group_users/check_request', to: 'group_users#check_request'

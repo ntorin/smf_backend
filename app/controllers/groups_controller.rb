@@ -65,6 +65,15 @@ class GroupsController < ApplicationController
     paginate json: groups
   end
 
+  # POST /groups/my_groups
+  # user_id:
+  # page:
+  def my_groups
+    groups = Group.joins(:group_user).where(:group_users => {user_id: params[:user_id]})
+
+    paginate json: groups
+  end
+
   # POST /groups/validate_identifier
   def validate_identifier
     if Group.where("LOWER(identifier) = ?", params[:identifier].downcase).exists?

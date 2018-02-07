@@ -10,7 +10,9 @@ class Post < ApplicationRecord
     Topic.increment_counter(:post_count, self.topic_id)
     User.increment_counter(:post_count, self.user_id)
 
-    Topic.find(self.topic_id).update(preview: self.content[0..50], last_post_date: DateTime.now)
+    if self.is_op
+      Topic.find(self.topic_id).update(preview: self.content[0..50], last_post_date: DateTime.now)
+    end
 
     User.update_counters(self.user_id, credits: 1000)
     CreditHistory.create({user_id: self.user_id, credit_transaction: 1000, description: 'post'})
