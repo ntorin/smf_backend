@@ -11,22 +11,23 @@ class ConversationMessage < ApplicationRecord
 
     ConversationUser.where(conversation_id: self.conversation_id).find_each do |u|
       ConversationUser.increment_counter(:unreads, u.id)
+      ActionCable.server.broadcast("conversation_uid_#{u.user_id}", {message: self, name: user.name, action: 'conversation_after_create'})
     end
 
     user = User.find(self.user_id)
 
-    ActionCable.server.broadcast("conversation_#{self.conversation_id}", {message: self, name: user.name, type: 'create'})
+    ActionCable.server.broadcast("conversation_#{self.conversation_id}", {message: self, name: user.name, action: 'conversation_message_after_create'})
   end
 
   def emit_update
     user = User.find(self.user_id)
-    ActionCable.server.broadcast("conversation_#{self.conversation_id}", {message: self, name: user.name, type: 'update'})
+    ActionCable.server.broadcast("conversation_#{self.conversation_id}", {message: self, name: user.name, action: 'conversation_message_after_update'})
   end
 
   def decrement_values
     user = User.find(self.user_id)
     Conversation.decrement_counter(:message_count, self.conversation_id)
 
-    ActionCable.server.broadcast("conversation_#{self.conversation_id}", {message: self, name: user.name, type: 'destroy'})
+    ActionCable.server.broadcast("conversation_#{self.conversation_id}", {message: self, name: user.name, action: 'conversation_message_after_destroy'})
   end
 end
