@@ -47,7 +47,7 @@ class GroupUsersController < ApplicationController
   # page:
   # per_page:
   def fetch
-    sort = 'post_count DESC'
+    sort = 'id ASC'
 
     group_users = paginate GroupUser.where(group_id: params[:group_id]).order(sort)
 
