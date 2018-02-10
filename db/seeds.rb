@@ -56,7 +56,7 @@ Faker::UniqueGenerator.clear
 
   group = Group.create(
       {
-          user_id: Faker::Number.between(1, 100),
+          user_id: Faker::Number.between(1, 50),
           identifier: Faker::Lorem.unique.characters(1..16),
           name: Faker::Coffee.blend_name,
           description: Faker::Lorem.sentence,
@@ -81,7 +81,7 @@ Faker::UniqueGenerator.clear
     GroupUser.create(
         {
             group_id: group.id,
-            user_id: Faker::Number.between(1, 100),
+            user_id: Faker::Number.between(1, 50),
             role: Faker::Boolean.boolean(0.8) ? 'user' : Faker::Boolean.boolean(0.8) ? 'moderator' : 'admin'
         }
     )
@@ -91,7 +91,7 @@ Faker::UniqueGenerator.clear
     topic = Topic.create(
              {
                  group_id: group.id,
-                 user_id: Faker::Number.between(1, 100),
+                 user_id: Faker::Number.between(1, 50),
                  title: Faker::Lorem.sentence,
                  topic_type: 0,
                  is_anonymous: Faker::Boolean.boolean,
@@ -118,7 +118,7 @@ Faker::UniqueGenerator.clear
               {
                   group_id: group.id,
                   topic_id: topic.id,
-                  user_id: Faker::Number.between(1, 100),
+                  user_id: Faker::Number.between(1, 50),
                   content: Faker::Lorem.paragraph,
                   likes: 0,
                   dislikes: 0,
@@ -133,8 +133,8 @@ end
 5000.times do |fo|
   Follow.create(
             {
-                follower_id: Faker::Number.between(1, 100),
-                following_id: Faker::Number.between(1, 100)
+                follower_id: Faker::Number.between(1, 50),
+                following_id: Faker::Number.between(1, 50)
             }
   )
 end
@@ -142,8 +142,8 @@ end
 5000.times do |fr|
   friend = Friend.create(
             {
-                friend_one: Faker::Number.between(1, 100),
-                friend_two: Faker::Number.between(1, 100),
+                friend_one: Faker::Number.between(1, 50),
+                friend_two: Faker::Number.between(1, 50),
                 is_accepted: Faker::Boolean.boolean(0.2)
             }
   )
