@@ -151,7 +151,7 @@ end
   if friend.is_accepted
     friend_one = User.find(friend.friend_one)
     friend_two = User.find(friend.friend_two)
-    conversation = Conversation.create({name: friend_one.name + ', ' + friend_two.name})
+    conversation = Conversation.create({name: friend_one.identifier + ', ' + friend_two.identifier})
     ConversationUser.create({conversation_id: conversation.id, user_id: friend_one.id})
     ConversationUser.create({conversation_id: conversation.id, user_id: friend_two.id})
   end

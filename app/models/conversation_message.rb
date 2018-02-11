@@ -15,7 +15,7 @@ class ConversationMessage < ApplicationRecord
     ConversationUser.where(conversation_id: self.conversation_id).find_each do |cu|
       ConversationUser.increment_counter(:unreads, cu.id)
       if !cu.is_muted
-        ActionCable.server.broadcast("conversation_uid_#{cu.user_id}", {conversation: conversation, name: user.name, action: 'conversation_message_after_create'})
+        ActionCable.server.broadcast("conversation_uid_#{cu.user_id}", {conversation: conversation, name: user.name, sender_id: self.user_id, action: 'conversation_message_after_create'})
       end
     end
 
