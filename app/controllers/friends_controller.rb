@@ -20,7 +20,7 @@ class FriendsController < ApplicationController
 
     if !request.blank? # check if other user sent friend request previously; if they did, accept the request
       request.update(is_accepted: true)
-      create_conversation(params[:friend][:friend_one], params[:friend][:two])
+      create_conversation(params[:friend][:friend_one], params[:friend][:friend_two])
 
       render json: request
     elsif !Friend.exists?(friend_one: params[:friend][:friend_one], friend_two: params[:friend][:friend_two]) # if the request isn't a duplicate, create a new one
