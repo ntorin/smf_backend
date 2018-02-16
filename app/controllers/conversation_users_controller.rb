@@ -56,6 +56,6 @@ class ConversationUsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def conversation_user_params
-      params.require(:conversation_user).permit(:conversation_id, :user_id, :is_admin)
+      params.require(:conversation_user).permit(:conversation_id, :user_id, :is_admin, :is_muted)
     end
 end
