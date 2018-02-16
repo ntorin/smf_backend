@@ -46,6 +46,8 @@ Rails.application.routes.draw do
   post 'group_users/fetch', to: 'group_users#fetch'
   post 'group_users/check_request', to: 'group_users#check_request'
 
+  post 'notifications/fetch', to: 'notifications#fetch'
+
   post 'posts/fetch', to: 'posts#fetch'
 
   post 'referrals/check_user', to: 'referrals#check_user'

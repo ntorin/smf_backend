@@ -16,6 +16,12 @@ class AddStatsToUser < ActiveRecord::Migration[5.0]
     add_column :users, :total_dislikes, :integer, default: 0
     add_column :users, :topic_count, :integer, default: 0
     add_column :users, :post_count, :integer, default: 0
+
+
+    add_column :users, :daily_post_count, :integer, default: 0
+    add_column :users, :weekly_post_count, :integer, default: 0
+    add_column :users, :monthly_post_count, :integer, default: 0
+
     add_column :users, :group_count, :integer, default: 0
     add_column :users, :accepted_tos, :boolean, default: false
     add_column :users, :verified, :boolean, default: false

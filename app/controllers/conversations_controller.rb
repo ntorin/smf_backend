@@ -55,6 +55,7 @@ class ConversationsController < ApplicationController
     query = '%' + params[:query].downcase + '%'
 
     conversations = paginate ConversationUser.where(user_id: params[:user_id])
+                                 .order(sort)
 
     render json: conversations.to_json(:include => :conversation)
   end
