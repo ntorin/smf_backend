@@ -10,7 +10,7 @@ class AddStatsToUser < ActiveRecord::Migration[5.0]
     add_column :users, :follower_count, :integer, default: 0
     add_column :users, :following_count, :integer, default: 0
     add_column :users, :friend_count, :integer, default: 0
-    add_column :users, :credits, :integer, default: 0
+    add_column :users, :credits, :bigint, default: 0
     add_column :users, :credit_multiplier, :integer, default: 1
     add_column :users, :total_likes, :integer, default: 0
     add_column :users, :total_dislikes, :integer, default: 0
