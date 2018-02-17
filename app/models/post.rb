@@ -9,6 +9,23 @@ class Post < ApplicationRecord
     Group.increment_counter(:post_count, self.group_id)
     Topic.increment_counter(:post_count, self.topic_id)
     User.increment_counter(:post_count, self.user_id)
+    User.increment_counter(:daily_post_count, self.user_id)
+    User.increment_counter(:weekly_post_count, self.user_id)
+    User.increment_counter(:monthly_post_count, self.user_id)
+
+    user = User.find(self.user_id)
+
+    if user.daily_post_count == 1
+      User.update_counters(self.user_id, credits: 1000)
+    end
+
+    if user.weekly_post_count == 10
+      User.update_counters(self.user_id, credits: 10000)
+    end
+
+    if user.monthly_post_count == 100
+      User.update_counters(self.user_id, credits: 100000)
+    end
 
     if self.is_op
       Topic.find(self.topic_id).update(preview: self.content[0..50], last_post_date: DateTime.now)

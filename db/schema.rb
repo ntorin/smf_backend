@@ -160,6 +160,7 @@ ActiveRecord::Schema.define(version: 20180124120257) do
     t.integer  "reported_id"
     t.string   "reason"
     t.text     "comment"
+    t.boolean  "is_closed"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -209,12 +210,15 @@ ActiveRecord::Schema.define(version: 20180124120257) do
     t.integer  "follower_count",         default: 0
     t.integer  "following_count",        default: 0
     t.integer  "friend_count",           default: 0
-    t.integer  "credits",                default: 0
+    t.bigint   "credits",                default: 0
     t.integer  "credit_multiplier",      default: 1
     t.integer  "total_likes",            default: 0
     t.integer  "total_dislikes",         default: 0
     t.integer  "topic_count",            default: 0
     t.integer  "post_count",             default: 0
+    t.integer  "daily_post_count",       default: 0
+    t.integer  "weekly_post_count",      default: 0
+    t.integer  "monthly_post_count",     default: 0
     t.integer  "group_count",            default: 0
     t.boolean  "accepted_tos",           default: false
     t.boolean  "verified",               default: false
