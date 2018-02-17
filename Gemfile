@@ -21,6 +21,7 @@ gem 'kaminari'
 gem 'api-pagination'
 gem 'faker'
 gem 'redis'
+gem 'whenever'
 
 
 group :development, :test do
