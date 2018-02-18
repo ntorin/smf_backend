@@ -11,12 +11,14 @@ class Follow < ApplicationRecord
     User.increment_counter(:following_count, self.follower_id)
     User.increment_counter(:follower_count, self.following_id)
 
+    user = User.find(self.follower_id)
+
     Notification.create({
                             user_id: self.following_id,
                             group_id: -1,
                             source_id: self.follower_id,
                             notification_type: 'follow-create',
-                            description: 'A user has followed you.',
+                            description: user.identifier + ' has followed you.',
                             is_seen: false,
                             deep_link: 'user/' + self.follower_id.to_s
                         })

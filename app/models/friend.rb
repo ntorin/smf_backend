@@ -20,12 +20,13 @@ class Friend < ApplicationRecord
 
   def send_notifications
     if self.is_accepted_changed? && self.is_accepted
+      user = User.find(self.friend_two)
       Notification.create({
                               user_id: self.friend_one,
                               group_id: -1,
                               source_id: self.friend_two,
                               notification_type: 'friend-create',
-                              description: 'Your friend request has been accepted.',
+                              description: user.identifier + ' has accepted your friend request.',
                               is_seen: false,
                               deep_link: 'user/' + self.friend_two.to_s
                           })

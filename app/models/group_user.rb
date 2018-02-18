@@ -25,36 +25,39 @@ class GroupUser < ApplicationRecord
 
   def send_notifications
     if self.is_kicked_changed? && self.is_kicked
+      group = Group.find(self.group_id)
       Notification.create({
                               user_id: self.user_id,
                               group_id: self.group_id,
                               source_id: self.group_id,
                               notification_type: 'group-kick',
-                              description: 'You have been kicked from a group.',
+                              description: 'You have been kicked from ' + group.identifier + '.',
                               is_seen: false,
                               deep_link: 'group/' + self.group_id.to_s
                           })
     end
 
     if self.is_banned_changed? && self.is_banned
+      group = Group.find(self.group_id)
       Notification.create({
                               user_id: self.user_id,
                               group_id: self.group_id,
                               source_id: self.group_id,
                               notification_type: 'group-ban',
-                              description: 'You have been banned from a group.',
+                              description: 'You have been banned from ' + group.identifier + '.',
                               is_seen: false,
                               deep_link: 'group/' + self.group_id.to_s
                           })
     end
 
     if self.is_banned_changed? && !self.is_banned
+      group = Group.find(self.group_id)
       Notification.create({
                               user_id: self.user_id,
                               group_id: self.group_id,
                               source_id: self.group_id,
                               notification_type: 'group-unban',
-                              description: 'You have been unbanned from a group.',
+                              description: 'You have been unbanned from ' + group.identifier + '.',
                               is_seen: false,
                               deep_link: 'group/' + self.group_id.to_s
                           })
