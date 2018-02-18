@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
           :recoverable, :rememberable, :trackable, :validatable,
           :omniauthable
   include DeviseTokenAuth::Concerns::User
-  after_update emit_update
+  after_update :emit_update
 
   has_many :topics
 
