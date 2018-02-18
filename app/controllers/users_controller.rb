@@ -28,6 +28,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   def update
     if @user.update(user_params)
+      ActionCable.server.broadcast("profile_#{self.id}", {user: @user, action: 'profile_update'})
       render json: @user
     else
       render json: @user.errors, status: :unprocessable_entity
