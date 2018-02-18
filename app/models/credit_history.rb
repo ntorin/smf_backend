@@ -1,5 +1,5 @@
 class CreditHistory < ApplicationRecord
-  after_update :emit_update
+  after_create :emit_update
 
   def emit_update
     user = User.find(self.user_id)
