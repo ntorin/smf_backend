@@ -38,6 +38,16 @@ class CreditHistoriesController < ApplicationController
     @credit_history.destroy
   end
 
+  # POST /credit_histories/fetch
+  # user_id
+  # page
+  # per_page
+  def fetch
+    credit_histories = CreditHistory.where(user_id: params[:user_id])
+                           .order('created_at DESC')
+    paginate json: credit_histories
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_credit_history
