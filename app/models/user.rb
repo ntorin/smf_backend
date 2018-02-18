@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
           :recoverable, :rememberable, :trackable, :validatable,
           :omniauthable
   include DeviseTokenAuth::Concerns::User
+  after_update emit_update
 
   has_many :topics
 
@@ -20,6 +21,10 @@ class User < ActiveRecord::Base
 
   def self.reset_monthly_posts
     User.update_all(monthly_post_count: 0)
+  end
+
+  def emit_update
+    ActionCable.server.broadcast("profile_#{self.id}", {user: user, action: 'profile_update'})
   end
 
   ROLES = %w[user moderator admin superadmin]
