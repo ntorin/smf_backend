@@ -1,4 +1,4 @@
-[Group, User, Topic, Post, Friend, Follow, GroupUser, Conversation, ConversationUser].each do |table|
+[Group, User, Topic, Post, Friend, Follow, GroupUser, Conversation, ConversationUser, Feed, CreditHistory, Notification, ConversationUser, Referral, Report].each do |table|
   ActiveRecord::Base.connection.execute("TRUNCATE #{table.table_name}")
   ActiveRecord::Base.connection.reset_pk_sequence!(table.table_name)
 end
