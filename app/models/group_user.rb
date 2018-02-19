@@ -15,6 +15,10 @@ class GroupUser < ApplicationRecord
     Group.increment_counter(:member_count, self.group_id)
     User.increment_counter(:group_count, self.user_id)
 
+    if self.user_id == Group.find(self.group_id).user_id
+      self.update(role: 'creator')
+    end
+
     Feed.create({user_id: self.user_id, group_id: self.group_id, source_id: self.group_id, feed_type: 'group-join', deep_link: 'group/' + self.id.to_s})
   end
 
