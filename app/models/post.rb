@@ -5,7 +5,7 @@ class Post < ApplicationRecord
 
   belongs_to :user
 
-  validates :content, {maximum: 20000}
+  #validates :content, {maximum: 20000}
 
   def increment_values
     Group.increment_counter(:post_count, self.group_id)

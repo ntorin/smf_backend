@@ -4,7 +4,7 @@ class Topic < ApplicationRecord
 
   belongs_to :user
 
-  validates :title, {maximum: 50}
+  #validates :title, {maximum: 50}
 
   def increment_values
     Group.increment_counter(:topic_count, self.group_id)
