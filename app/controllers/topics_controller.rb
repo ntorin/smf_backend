@@ -53,12 +53,14 @@ class TopicsController < ApplicationController
       else
     end
 
+    q = '%' + params[:query].to_s.downcase + '%'
+
     if params[:pinned]
       topics = paginate Topic.where("group_id = ? AND is_pinned IS TRUE", params[:group_id])
                             .joins(:user)
                             .order(sort)
     else
-      topics = paginate Topic.where("group_id = ? AND LOWER(title) LIKE ?", params[:group_id], '%' + params[:query].to_s.downcase + '%')
+      topics = paginate Topic.where("group_id = ? AND (LOWER(title) LIKE ? OR lower(tags) LIKE ?)", params[:group_id], q, q)
                             .joins(:user)
                             .order(sort)
     end

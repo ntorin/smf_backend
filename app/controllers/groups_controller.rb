@@ -57,9 +57,9 @@ class GroupsController < ApplicationController
 
     end
 
-    query = '%' + params[:query].downcase + '%'
+    q = '%' + params[:query].downcase + '%'
 
-    groups = Group.where("LOWER(name) LIKE ? OR LOWER(identifier) LIKE ?", query, query)
+    groups = Group.where("LOWER(name) LIKE ? OR LOWER(identifier) LIKE ? OR lower(tags) LIKE ?", q, q, q)
                  .order(sort)
 
     paginate json: groups
