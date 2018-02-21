@@ -18,32 +18,32 @@ class Post < ApplicationRecord
     user = User.find(self.user_id)
 
     if user.daily_post_count == 1
-      User.update_counters(self.user_id, credits: 1000)
-      CreditHistory.create({user_id: self.user_id, credit_transaction: 1000, description: 'activity-daily-1post', source_id: self.id})
+      User.update_counters(self.user_id, credits: 10)
+      CreditHistory.create({user_id: self.user_id, credit_transaction: 10, description: 'activity-daily-1post', source_id: self.id})
     end
 
     if user.weekly_post_count == 10
-      User.update_counters(self.user_id, credits: 10000)
-      CreditHistory.create({user_id: self.user_id, credit_transaction: 10000, description: 'activity-weekly-10posts', source_id: self.id})
+      User.update_counters(self.user_id, credits: 100)
+      CreditHistory.create({user_id: self.user_id, credit_transaction: 100, description: 'activity-weekly-10posts', source_id: self.id})
     end
 
     if user.monthly_post_count == 100
-      User.update_counters(self.user_id, credits: 100000)
-      CreditHistory.create({user_id: self.user_id, credit_transaction: 100000, description: 'activity-monthly-100posts', source_id: self.id})
+      User.update_counters(self.user_id, credits: 1000)
+      CreditHistory.create({user_id: self.user_id, credit_transaction: 1000, description: 'activity-monthly-100posts', source_id: self.id})
     end
 
     if self.is_op
       Topic.find(self.topic_id).update(preview: self.content[0..50], last_post_date: DateTime.now)
     end
 
-    User.update_counters(self.user_id, credits: 1000)
-    CreditHistory.create({user_id: self.user_id, credit_transaction: 1000, description: 'user-post', source_id: self.id})
+    User.update_counters(self.user_id, credits: 10)
+    CreditHistory.create({user_id: self.user_id, credit_transaction: 10, description: 'user-post', source_id: self.id})
 
     if User.exists?(id: self.user_id) && User.find(self.user_id).post_count <= 100
       if Referral.exists?(user_id: self.user_id)
         ref = Referral.where(user_id: self.user_id).first
-        User.update_counters(ref.referrer_id, credits: 1000)
-        CreditHistory.create({user_id: ref.referrer_id, credit_transaction: 1000, description: 'referral-post', source_id: self.id})
+        User.update_counters(ref.referrer_id, credits: 10)
+        CreditHistory.create({user_id: ref.referrer_id, credit_transaction: 10, description: 'referral-post', source_id: self.id})
       end
     end
 

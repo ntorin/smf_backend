@@ -18,5 +18,17 @@ Group.create(
         post_count: 0,
         lat: 0,
         lng: 0
-    }
+    },
+    {
+        user_id: 1,
+        identifier: 'global',
+        name: 'Global BBS',
+        description: 'Talk about anything.',
+        tags: 'global',
+        member_count: 0,
+        topic_count: 0,
+        post_count: 0,
+        lat: 0,
+        lng: 0
+    },
 )
