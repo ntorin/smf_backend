@@ -40,7 +40,7 @@ class Post < ApplicationRecord
     CreditHistory.create({user_id: self.user_id, credit_transaction: 1000, description: 'user-post', source_id: self.id})
 
     if User.exists?(id: self.user_id) && User.find(self.user_id).post_count <= 100
-      ref = Referral.find(self.user_id)
+      ref = Referral.where(user_id: self.user_id).first
       if ref.exists?
         User.update_counters(ref.referrer_id, credits: 1000)
         CreditHistory.create({user_id: ref.referrer_id, credit_transaction: 1000, description: 'referral-post', source_id: self.id})
