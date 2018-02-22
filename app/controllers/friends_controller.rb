@@ -110,7 +110,8 @@ class FriendsController < ApplicationController
       conversation = Conversation.create({name: friend_one.identifier + ', ' + friend_two.identifier})
       ConversationUser.create({conversation_id: conversation.id, user_id: friend_one.id})
       ConversationUser.create({conversation_id: conversation.id, user_id: friend_two.id})
-      ActionCable.server.broadcast("conversation_uid_#{cu.user_id}", {action: 'create_conversation'})
+      ActionCable.server.broadcast("conversation_uid_#{friend_one.id}", {action: 'create_conversation'})
+      ActionCable.server.broadcast("conversation_uid_#{friend_two.id}", {action: 'create_conversation'})
     end
   end
 
