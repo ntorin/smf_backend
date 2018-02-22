@@ -106,9 +106,12 @@ class FriendsController < ApplicationController
   def create_conversation(friend_one, friend_two)
     friend_one = User.find(friend_one)
     friend_two = User.find(friend_two)
-    conversation = Conversation.create({name: friend_one.identifier + ', ' + friend_two.identifier})
-    ConversationUser.create({conversation_id: conversation.id, user_id: friend_one.id})
-    ConversationUser.create({conversation_id: conversation.id, user_id: friend_two.id})
+    if Conversation.exists?(name: friend_one.identifier + ', ' + friend_two.identifier)
+      conversation = Conversation.create({name: friend_one.identifier + ', ' + friend_two.identifier})
+      ConversationUser.create({conversation_id: conversation.id, user_id: friend_one.id})
+      ConversationUser.create({conversation_id: conversation.id, user_id: friend_two.id})
+      ActionCable.server.broadcast("conversation_uid_#{cu.user_id}", {action: 'create_conversation'})
+    end
   end
 
   private

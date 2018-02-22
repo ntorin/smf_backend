@@ -22,7 +22,6 @@ class Follow < ApplicationRecord
                             is_seen: false,
                             deep_link: 'user/' + self.follower_id.to_s
                         })
-    ActionCable.server.broadcast("conversation_uid_#{cu.user_id}", {action: 'friend_after_update'})
   end
 
   def decrement_values
