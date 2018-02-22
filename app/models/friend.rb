@@ -30,6 +30,7 @@ class Friend < ApplicationRecord
                               is_seen: false,
                               deep_link: 'user/' + self.friend_two.to_s
                           })
+
     end
   end
 
