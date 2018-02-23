@@ -45,7 +45,7 @@ class ReferralsController < ApplicationController
   def check_user
     status = {}
     if params[:referrer].include? '@'
-      if referrer = User.where(email: params[:referrer]).first
+      if referrer = User.where("LOWER(email) = ?", params[:referrer].downcase).first
         if referrer.id.to_s != params[:user_id]
         status = { message: 'User is valid.', valid: true, referrer_id: referrer.id}
         else
@@ -55,7 +55,7 @@ class ReferralsController < ApplicationController
         status = {message: 'User with this email doesn\'t exist.', valid: false}
       end
     else
-      if referrer = User.where(identifier: params[:referrer]).first
+      if referrer = User.where("LOWER(identifier) = ?", params[:referrer].downcase).first
         if referrer.id.to_s != params[:user_id]
           status = { message: 'User is valid.', valid: true, referrer_id: referrer.id}
         else
