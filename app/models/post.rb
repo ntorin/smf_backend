@@ -32,8 +32,12 @@ class Post < ApplicationRecord
       CreditHistory.create({user_id: self.user_id, credit_transaction: 1000, description: 'activity-monthly-100posts', source_id: self.id})
     end
 
+    topic = Topic.find(self.topic_id)
+
     if self.is_op
-      Topic.find(self.topic_id).update(preview: self.content[0..50], last_post_date: DateTime.now)
+      topic.update(preview: self.content[0..50], last_post_date: DateTime.now)
+    else
+      topic.update(last_post_date: DateTime.now)
     end
 
     User.update_counters(self.user_id, credits: 10)
