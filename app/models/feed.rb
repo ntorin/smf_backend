@@ -14,14 +14,26 @@ class Feed < ApplicationRecord
       feed_type = self.feed_type.split(/-/)[0]
       case feed_type
         when 'topic'
-          topic = Topic.find(self.source_id)
-          h[:feed] = topic
+          if Topic.exists?(self.source_id)
+            topic = Topic.find(self.source_id)
+            h[:feed] = topic
+          else
+            h[:feed] = {type: '404'}
+          end
         when 'group'
-          group = Group.find(self.source_id)
-          h[:feed] = group
+          if Group.exists?(self.source_id)
+            group = Group.find(self.source_id)
+            h[:feed] = group
+          else
+            h[:feed] = {type: '404'}
+          end
         when 'post'
-          post = Post.find(self.source_id)
-          h[:feed] = post
+          if Post.exists?(self.source_id)
+            post = Post.find(self.source_id)
+            h[:feed] = post
+          else
+            h[:feed] = {type: '404'}
+          end
       end
     return h
   end
