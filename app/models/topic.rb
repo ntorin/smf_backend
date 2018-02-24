@@ -10,7 +10,7 @@ class Topic < ApplicationRecord
     Group.increment_counter(:topic_count, self.group_id)
     User.increment_counter(:topic_count, self.user_id)
 
-    Feed.create({user_id: self.user_id, group_id: self.group_id, source_id: self.id, feed_type: 'topic-create', deep_link: 'topic/' + self.id.to_s})
+    #Feed.create({user_id: self.user_id, group_id: self.group_id, source_id: self.id, feed_type: 'topic-create', deep_link: 'topic/' + self.id.to_s})
   end
 
   def decrement_values
