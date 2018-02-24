@@ -19,7 +19,7 @@ class GroupUser < ApplicationRecord
       self.update(role: 'creator')
     end
 
-    Feed.create({user_id: self.user_id, group_id: self.group_id, source_id: self.group_id, feed_type: 'group-join', deep_link: 'group/' + self.id.to_s})
+    #Feed.create({user_id: self.user_id, group_id: self.group_id, source_id: self.group_id, feed_type: 'group-join', deep_link: 'group/' + self.id.to_s})
   end
 
   def decrement_values
