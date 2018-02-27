@@ -45,7 +45,7 @@ class ConversationsController < ApplicationController
   # per_page:
   # query:
   def fetch
-    sort = 'updated_at DESC'
+    sort = 'updated_at ASC'
 
     case params[:sort_by]
       when 'recent'
