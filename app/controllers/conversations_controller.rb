@@ -45,7 +45,7 @@ class ConversationsController < ApplicationController
   # per_page:
   # query:
   def fetch
-    sort = 'updated_at ASC'
+    sort = 'updated_at DESC'
 
     case params[:sort_by]
       when 'recent'
@@ -54,8 +54,8 @@ class ConversationsController < ApplicationController
 
     query = '%' + params[:query].downcase + '%'
 
-    conversations = paginate ConversationUser.where(user_id: params[:user_id])
-                                 .order(sort)
+    conversations = paginate ConversationUser.where(user_id: params[:user_id]).includes(:conversation)
+                                 .order('conversations.updated_at desc')
 
     render json: conversations.to_json(:include => :conversation)
   end
