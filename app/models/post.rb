@@ -61,6 +61,7 @@ class Post < ApplicationRecord
   end
 
   def decrement_values
+    Feed.where(feed_type: 'post', source_id: self.id).destroy_all
     Group.decrement_counter(:post_count, self.group_id)
     Topic.decrement_counter(:post_count, self.topic_id)
     User.decrement_counter(:post_count, self.user_id)

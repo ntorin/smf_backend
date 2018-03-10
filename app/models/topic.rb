@@ -14,6 +14,7 @@ class Topic < ApplicationRecord
   end
 
   def decrement_values
+    Post.where(topic_id: self.id).destroy_all
     Group.decrement_counter(:topic_count, self.group_id)
     User.decrement_counter(:topic_count, self.user_id)
   end
