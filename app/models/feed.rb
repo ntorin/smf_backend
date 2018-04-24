@@ -30,7 +30,6 @@ class Feed < ApplicationRecord
         when 'post'
           if Post.exists?(self.source_id)
             post = Post.find(self.source_id)
-
             h[:feed] = {post: post, title: Topic.find(post.topic_id).title, group_name: Group.find(post.group_id).name}
           else
             h[:feed] = {type: '404'}

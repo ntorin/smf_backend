@@ -1,0 +1,2 @@
+class GrapevineMessage < ApplicationRecord
+end

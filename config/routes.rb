@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :grapevine_messages
   resources :referrals
   resources :group_users
   resources :friends
