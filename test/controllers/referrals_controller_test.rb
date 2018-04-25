@@ -3,6 +3,7 @@ require 'test_helper'
 class ReferralsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @referral = referrals(:one)
+    @user = User.create(email: 'test@citrume.com', password: 'Ilovefruits6', password_confirmation: 'Ilovefruits6')
   end
 
   test "should get index" do

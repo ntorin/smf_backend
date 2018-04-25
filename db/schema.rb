@@ -10,13 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180124120257) do
+ActiveRecord::Schema.define(version: 20180425150739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "anonymous_profiles", force: :cascade do |t|
+    t.string   "user_id"
+    t.string   "name"
+    t.string   "name_color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "blocks", force: :cascade do |t|
-    t.integer  "blocker_id"
+    t.integer  "user_id"
     t.integer  "blocked_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -54,6 +62,7 @@ ActiveRecord::Schema.define(version: 20180124120257) do
 
   create_table "credit_histories", force: :cascade do |t|
     t.integer  "user_id"
+    t.integer  "source_id"
     t.integer  "credit_transaction"
     t.text     "description"
     t.datetime "created_at",         null: false
@@ -85,6 +94,16 @@ ActiveRecord::Schema.define(version: 20180124120257) do
     t.datetime "updated_at",                  null: false
   end
 
+  create_table "grapevine_messages", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.integer  "group_id"
+    t.string   "message"
+    t.boolean  "is_anonymous"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   create_table "group_users", force: :cascade do |t|
     t.integer  "group_id"
     t.integer  "user_id"
@@ -105,12 +124,13 @@ ActiveRecord::Schema.define(version: 20180124120257) do
     t.integer  "member_count",                default: 0
     t.integer  "topic_count",                 default: 0
     t.integer  "post_count",                  default: 0
+    t.boolean  "is_anonymous",                default: false
+    t.boolean  "is_nsfw",                     default: false
     t.decimal  "lat",                         default: "0.0"
     t.decimal  "{:precision=>10, :scale=>6}", default: "0.0"
     t.decimal  "lng",                         default: "0.0"
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
-    t.index ["identifier"], name: "index_groups_on_identifier", unique: true, using: :btree
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -125,26 +145,19 @@ ActiveRecord::Schema.define(version: 20180124120257) do
     t.datetime "updated_at",        null: false
   end
 
-  create_table "post_likes", force: :cascade do |t|
-    t.integer  "post_id"
-    t.integer  "user_id"
-    t.boolean  "is_like"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "posts", force: :cascade do |t|
     t.integer  "group_id"
     t.integer  "topic_id"
     t.integer  "user_id"
     t.text     "content"
-    t.integer  "likes",        default: 0
-    t.integer  "dislikes",     default: 0
+    t.integer  "likes",               default: 0
+    t.integer  "dislikes",            default: 0
     t.boolean  "is_op"
-    t.boolean  "is_anonymous"
+    t.boolean  "is_anonymous",        default: false
+    t.boolean  "is_anonymous_poster", default: false
     t.datetime "edit_date"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   create_table "referrals", force: :cascade do |t|
@@ -171,24 +184,27 @@ ActiveRecord::Schema.define(version: 20180124120257) do
     t.string   "title"
     t.string   "topic_type"
     t.string   "preview"
-    t.boolean  "is_anonymous"
-    t.boolean  "is_pinned",      default: false
-    t.boolean  "is_locked",      default: false
+    t.boolean  "is_pinned",           default: false
+    t.boolean  "is_locked",           default: false
+    t.boolean  "is_anonymous",        default: false
+    t.boolean  "is_anonymous_poster", default: false
+    t.boolean  "is_nsfw",             default: false
+    t.boolean  "is_general",          default: false
     t.string   "tags"
-    t.integer  "post_count",     default: 0
+    t.integer  "post_count",          default: 0
     t.datetime "last_post_date"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "provider",               default: "email", null: false
-    t.string   "uid",                    default: "",      null: false
-    t.string   "encrypted_password",     default: "",      null: false
+    t.string   "provider",                default: "email", null: false
+    t.string   "uid",                     default: "",      null: false
+    t.string   "encrypted_password",      default: "",      null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,       null: false
+    t.integer  "sign_in_count",           default: 0,       null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -199,30 +215,37 @@ ActiveRecord::Schema.define(version: 20180124120257) do
     t.string   "unconfirmed_email"
     t.string   "email"
     t.json     "tokens"
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.string   "identifier"
     t.string   "name"
-    t.string   "role",                   default: "user"
+    t.string   "role",                    default: "user"
     t.string   "blurb"
     t.date     "birthday"
-    t.integer  "referral_count",         default: 0
-    t.integer  "follower_count",         default: 0
-    t.integer  "following_count",        default: 0
-    t.integer  "friend_count",           default: 0
-    t.bigint   "credits",                default: 0
-    t.integer  "credit_multiplier",      default: 1
-    t.integer  "total_likes",            default: 0
-    t.integer  "total_dislikes",         default: 0
-    t.integer  "topic_count",            default: 0
-    t.integer  "post_count",             default: 0
-    t.integer  "daily_post_count",       default: 0
-    t.integer  "weekly_post_count",      default: 0
-    t.integer  "monthly_post_count",     default: 0
-    t.integer  "group_count",            default: 0
-    t.boolean  "accepted_tos",           default: false
-    t.boolean  "verified",               default: false
-    t.boolean  "is_banned",              default: false
+    t.integer  "referral_count",          default: 0
+    t.integer  "follower_count",          default: 0
+    t.integer  "following_count",         default: 0
+    t.integer  "friend_count",            default: 0
+    t.bigint   "credits",                 default: 0
+    t.integer  "credit_multiplier",       default: 1
+    t.integer  "total_likes",             default: 0
+    t.integer  "total_dislikes",          default: 0
+    t.integer  "topic_count",             default: 0
+    t.integer  "post_count",              default: 0
+    t.integer  "group_count",             default: 0
+    t.integer  "daily_post_count",        default: 0
+    t.integer  "weekly_post_count",       default: 0
+    t.integer  "monthly_post_count",      default: 0
+    t.boolean  "is_post_history_private", default: false
+    t.boolean  "is_friends_private",      default: false
+    t.boolean  "is_groups_private",       default: false
+    t.boolean  "is_post_count_private",   default: false
+    t.boolean  "is_join_date_private",    default: false
+    t.boolean  "is_dark_theme",           default: false
+    t.string   "name_color",              default: ""
+    t.boolean  "accepted_tos",            default: false
+    t.boolean  "verified",                default: false
+    t.boolean  "is_banned",               default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["identifier"], name: "index_users_on_identifier", unique: true, using: :btree

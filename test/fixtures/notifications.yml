@@ -5,11 +5,11 @@ one:
   notification_type: 1
   description: MyText
   is_seen: false
-  goto_id: 1
+  source_id: 1
 
 two:
   user_id: 1
   notification_type: 1
   description: MyText
   is_seen: false
-  goto_id: 1
+  source_id: 1

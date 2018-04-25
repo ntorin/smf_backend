@@ -12,7 +12,7 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create feed" do
     assert_difference('Feed.count') do
-      post feeds_url, params: { feed: { feed_type: @feed.feed_type, goto_id: @feed.goto_id, user_id: @feed.user_id } }, as: :json
+      post feeds_url, params: { feed: { feed_type: @feed.feed_type, source_id: @feed.source_id, user_id: @feed.user_id } }, as: :json
     end
 
     assert_response 201
@@ -24,7 +24,7 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update feed" do
-    patch feed_url(@feed), params: { feed: { feed_type: @feed.feed_type, goto_id: @feed.goto_id, user_id: @feed.user_id } }, as: :json
+    patch feed_url(@feed), params: { feed: { feed_type: @feed.feed_type, source_id: @feed.source_id, user_id: @feed.user_id } }, as: :json
     assert_response 200
   end
 

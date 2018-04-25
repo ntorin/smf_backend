@@ -12,7 +12,7 @@ class CreditHistoriesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create credit_history" do
     assert_difference('CreditHistory.count') do
-      post credit_histories_url, params: { credit_history: { description: @credit_history.description, transaction: @credit_history.transaction, user_id: @credit_history.user_id } }, as: :json
+      post credit_histories_url, params: { credit_history: { description: @credit_history.description, credit_transaction: @credit_history.credit_transaction, user_id: @credit_history.user_id } }, as: :json
     end
 
     assert_response 201
@@ -24,7 +24,7 @@ class CreditHistoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update credit_history" do
-    patch credit_history_url(@credit_history), params: { credit_history: { description: @credit_history.description, transaction: @credit_history.transaction, user_id: @credit_history.user_id } }, as: :json
+    patch credit_history_url(@credit_history), params: { credit_history: { description: @credit_history.description, credit_transaction: @credit_history.credit_transaction, user_id: @credit_history.user_id } }, as: :json
     assert_response 200
   end
 

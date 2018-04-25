@@ -9,7 +9,8 @@ class CreatePosts < ActiveRecord::Migration[5.0]
       t.integer :dislikes, default: 0
 
       t.boolean :is_op
-      t.boolean :is_anonymous
+      t.boolean :is_anonymous, default: false
+      t.boolean :is_anonymous_poster, default: false
 
       t.datetime :edit_date
       t.timestamps

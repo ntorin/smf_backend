@@ -12,7 +12,7 @@ class GroupUsersControllerTest < ActionDispatch::IntegrationTest
 
   test "should create group_user" do
     assert_difference('GroupUser.count') do
-      post group_users_url, params: { group_user: { group_id: @group_user.group_id, user_id: @group_user.user_id } }, as: :json
+      post group_users_url, params: { group_user: { group_id: Group.last.id, user_id: User.last.id } }, as: :json
     end
 
     assert_response 201

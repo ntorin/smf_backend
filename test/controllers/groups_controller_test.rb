@@ -12,7 +12,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create group" do
     assert_difference('Group.count') do
-      post groups_url, params: { group: { user_id: @group.user_id, description: @group.description, handle: @group.handle, lat: @group.lat, lng: @group.lng, member_count: @group.member_count, name: @group.name, post_count: @group.post_count, topic_count: @group.topic_count } }, as: :json
+      post groups_url, params: { group: { user_id: @group.user_id, description: @group.description, identifier: @group.identifier + 'unique', lat: @group.lat, lng: @group.lng, member_count: @group.member_count, name: @group.name, post_count: @group.post_count, topic_count: @group.topic_count } }, as: :json
     end
 
     assert_response 201
@@ -24,7 +24,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update group" do
-    patch group_url(@group), params: { group: { user_id: @group.user_id, description: @group.description, handle: @group.handle, lat: @group.lat, lng: @group.lng, member_count: @group.member_count, name: @group.name, post_count: @group.post_count, topic_count: @group.topic_count } }, as: :json
+    patch group_url(@group), params: { group: { user_id: @group.user_id, description: @group.description, identifier: @group.identifier, lat: @group.lat, lng: @group.lng, member_count: @group.member_count, name: @group.name, post_count: @group.post_count, topic_count: @group.topic_count } }, as: :json
     assert_response 200
   end
 

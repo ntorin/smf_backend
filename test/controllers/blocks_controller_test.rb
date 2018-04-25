@@ -12,7 +12,7 @@ class BlocksControllerTest < ActionDispatch::IntegrationTest
 
   test "should create block" do
     assert_difference('Block.count') do
-      post blocks_url, params: { block: { blocked_id: @block.blocked_id, blocker_id: @block.blocker_id } }, as: :json
+      post blocks_url, params: { block: { blocked_id: @block.blocked_id, user_id: @block.user_id } }, as: :json
     end
 
     assert_response 201
@@ -24,7 +24,7 @@ class BlocksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update block" do
-    patch block_url(@block), params: { block: { blocked_id: @block.blocked_id, blocker_id: @block.blocker_id } }, as: :json
+    patch block_url(@block), params: { block: { blocked_id: @block.blocked_id, user_id: @block.user_id } }, as: :json
     assert_response 200
   end
 

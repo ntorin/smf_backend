@@ -12,7 +12,7 @@ class NotificationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create notification" do
     assert_difference('Notification.count') do
-      post notifications_url, params: { notification: { description: @notification.description, goto_id: @notification.goto_id, is_seen: @notification.is_seen, notification_type: @notification.notification_type, user_id: @notification.user_id } }, as: :json
+      post notifications_url, params: { notification: { description: @notification.description, source_id: @notification.source_id, is_seen: @notification.is_seen, notification_type: @notification.notification_type, user_id: @notification.user_id } }, as: :json
     end
 
     assert_response 201
@@ -24,7 +24,7 @@ class NotificationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update notification" do
-    patch notification_url(@notification), params: { notification: { description: @notification.description, goto_id: @notification.goto_id, is_seen: @notification.is_seen, notification_type: @notification.notification_type, user_id: @notification.user_id } }, as: :json
+    patch notification_url(@notification), params: { notification: { description: @notification.description, source_id: @notification.source_id, is_seen: @notification.is_seen, notification_type: @notification.notification_type, user_id: @notification.user_id } }, as: :json
     assert_response 200
   end
 

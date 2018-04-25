@@ -1,8 +1,8 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  topic_id: 1
-  user_id: 1
+  topic_id: <%= Topic.first.id %>
+  user_id: <%= User.first.id %>
   content: MyText
   likes: 1
   dislikes: 1
@@ -10,8 +10,8 @@ one:
   edit_date: 2017-11-01 15:30:38
 
 two:
-  topic_id: 1
-  user_id: 1
+  topic_id: <%= Topic.first.id %>
+  user_id: <%= User.first.id %>
   content: MyText
   likes: 1
   dislikes: 1

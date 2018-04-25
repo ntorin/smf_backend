@@ -1,0 +1,2 @@
+class AnonymousProfile < ApplicationRecord
+end

@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
+  resources :anonymous_profiles
   resources :grapevine_messages
   resources :referrals
   resources :group_users
   resources :friends
   resources :conversation_messages
   resources :users
-  resources :post_likes
   resources :posts
   resources :reports
   resources :notifications

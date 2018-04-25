@@ -12,7 +12,7 @@ class ConversationUsersControllerTest < ActionDispatch::IntegrationTest
 
   test "should create conversation_user" do
     assert_difference('ConversationUser.count') do
-      post conversation_users_url, params: { conversation_user: { conversation_id: @conversation_user.conversation_id, is_admin: @conversation_user.is_admin, user_id: @conversation_user.user_id } }, as: :json
+      post conversation_users_url, params: { conversation_user: { conversation_id: @conversation_user.conversation_id, user_id: @conversation_user.user_id } }, as: :json
     end
 
     assert_response 201
@@ -24,7 +24,7 @@ class ConversationUsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update conversation_user" do
-    patch conversation_user_url(@conversation_user), params: { conversation_user: { conversation_id: @conversation_user.conversation_id, is_admin: @conversation_user.is_admin, user_id: @conversation_user.user_id } }, as: :json
+    patch conversation_user_url(@conversation_user), params: { conversation_user: { conversation_id: @conversation_user.conversation_id, user_id: @conversation_user.user_id } }, as: :json
     assert_response 200
   end
 

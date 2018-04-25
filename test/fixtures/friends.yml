@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  friend_one: 1
-  friend_two: 1
+  friend_one: <%= User.first.id %>
+  friend_two: <%= User.last.id %>
   is_accepted: false
 
 two:
-  friend_one: 1
-  friend_two: 1
+  friend_one: <%= User.first.id %>
+  friend_two: <%= User.last.id %>
   is_accepted: false

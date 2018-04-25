@@ -3,6 +3,7 @@ require 'test_helper'
 class ConversationMessagesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @conversation_message = conversation_messages(:one)
+    @user = User.create(email: 'test@citrume.com', password: 'Ilovefruits6', password_confirmation: 'Ilovefruits6')
   end
 
   test "should get index" do
@@ -12,7 +13,7 @@ class ConversationMessagesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create conversation_message" do
     assert_difference('ConversationMessage.count') do
-      post conversation_messages_url, params: { conversation_message: { conversation_id: @conversation_message.conversation_id, message: @conversation_message.message, sender_id: @conversation_message.sender_id } }, as: :json
+      post conversation_messages_url, params: { conversation_message: { conversation_id: @conversation_message.conversation_id, message: @conversation_message.message, user_id: @conversation_message.user_id } }, as: :json
     end
 
     assert_response 201
@@ -24,7 +25,7 @@ class ConversationMessagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update conversation_message" do
-    patch conversation_message_url(@conversation_message), params: { conversation_message: { conversation_id: @conversation_message.conversation_id, message: @conversation_message.message, sender_id: @conversation_message.sender_id } }, as: :json
+    patch conversation_message_url(@conversation_message), params: { conversation_message: { conversation_id: @conversation_message.conversation_id, message: @conversation_message.message, user_id: @conversation_message.user_id } }, as: :json
     assert_response 200
   end
 

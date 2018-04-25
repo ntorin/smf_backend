@@ -10,7 +10,9 @@ class CreateTopics < ActiveRecord::Migration[5.0]
       t.boolean :is_pinned, default: false
       t.boolean :is_locked, default: false
       t.boolean :is_anonymous, default: false
+      t.boolean :is_anonymous_poster, default: false
       t.boolean :is_nsfw, default: false
+      t.boolean :is_general, default: false
 
       t.string :tags
       t.integer :post_count, default: 0
