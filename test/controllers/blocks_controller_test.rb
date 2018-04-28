@@ -6,6 +6,8 @@ class BlocksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
+    u = User.new(email: 'test@citrume.com', password: 'Ilovefruits6')
+    sign_in(u)
     get blocks_url, as: :json
     assert_response :success
   end
